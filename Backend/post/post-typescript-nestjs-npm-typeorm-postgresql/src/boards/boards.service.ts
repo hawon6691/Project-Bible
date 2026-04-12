@@ -1,0 +1,1 @@
+import { Injectable } from "@nestjs/common"; @Injectable() export class BoardsService { private readonly items = [{ id: 1, name: 'free', description: 'Free board', displayOrder: 1, status: 'ACTIVE' }, { id: 2, name: 'notice', description: 'Notice board', displayOrder: 2, status: 'ACTIVE' }]; findAll() { return this.items; } }

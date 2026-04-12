@@ -1,0 +1,1 @@
+import { Injectable } from "@nestjs/common"; @Injectable() export class UsersService { me() { return { id: 1, email: "user@project-bible.dev", name: "Project Bible User", role: "USER", domain: "shop" }; } }

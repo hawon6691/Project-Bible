@@ -1,0 +1,3 @@
+package com.projectbible.shop.maven.jpa.mysql.auth.application;
+import java.util.Map; import org.springframework.stereotype.Service;
+@Service public class AuthService { public Map<String,Object> login(String email) { return Map.of("accessToken","mock-access-token-shop-java-springboot-maven-jpa-mysql","refreshToken","mock-refresh-token-shop-java-springboot-maven-jpa-mysql","tokenType","Bearer","email",email); } public Map<String,Object> refresh() { return Map.of("accessToken","mock-access-token-refreshed-shop-java-springboot-maven-jpa-mysql","refreshToken","mock-refresh-token-refreshed-shop-java-springboot-maven-jpa-mysql","tokenType","Bearer"); } public Map<String,Object> logout() { return Map.of("loggedOut",true); } }

@@ -1,0 +1,67 @@
+services:
+  # 공용 PostgreSQL 인스턴스 (주요 백엔드 기본값)
+  postgres:
+    image: postgres:16-alpine
+    container_name: projectbible-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: project_bible
+      POSTGRES_PASSWORD: project_bible
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ../postgresql:/workspace/postgresql
+      - ../postgresql/bootstrap:/docker-entrypoint-initdb.d
+
+  # 공용 MySQL 인스턴스 (MySQL/MariaDB 계열 실험용)
+  mysql:
+    image: mysql:8.4
+    container_name: projectbible-mysql
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: project_bible
+      MYSQL_DATABASE: mysql
+      MYSQL_USER: project_bible
+      MYSQL_PASSWORD: project_bible
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ../mysql:/workspace/mysql
+      - ../mysql/bootstrap:/docker-entrypoint-initdb.d
+
+  # 캐시/큐 브로커 (언어 공통)
+  redis:
+    image: redis:7-alpine
+    container_name: projectbible-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  # 검색 인프라 (언어 공통)
+  elasticsearch:
+    image: elasticsearch:8.12.0
+    container_name: projectbible-elasticsearch
+    restart: unless-stopped
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+
+volumes:
+  postgres_data:
+  mysql_data:
+  redis_data:
+  es_data:

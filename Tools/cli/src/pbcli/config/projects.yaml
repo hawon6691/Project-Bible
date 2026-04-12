@@ -1,0 +1,363 @@
+backend:
+- name: post-java-springboot-maven-jpa-postgresql
+  path: Backend/post/post-java-springboot-maven-jpa-postgresql
+  kind: backend
+  domain: post
+  runtime: java
+  framework: springboot
+  build: maven
+  db: postgresql
+  port: 8000
+  start_command: .\mvnw.cmd spring-boot:run
+  test_command: .\mvnw.cmd test
+  env_file: .env.example
+- name: post-java-springboot-maven-jpa-mysql
+  path: Backend/post/post-java-springboot-maven-jpa-mysql
+  kind: backend
+  domain: post
+  runtime: java
+  framework: springboot
+  build: maven
+  db: mysql
+  port: 8000
+  start_command: .\mvnw.cmd spring-boot:run
+  test_command: .\mvnw.cmd test
+  env_file: .env.example
+- name: post-java-springboot-maven-jdbc-postgresql
+  path: Backend/post/post-java-springboot-maven-jdbc-postgresql
+  kind: backend
+  domain: post
+  runtime: java
+  framework: springboot
+  build: maven
+  db: postgresql
+  port: 8000
+  start_command: .\mvnw.cmd spring-boot:run
+  test_command: .\mvnw.cmd test
+  env_file: .env.example
+- name: post-java-springboot-maven-jdbc-mysql
+  path: Backend/post/post-java-springboot-maven-jdbc-mysql
+  kind: backend
+  domain: post
+  runtime: java
+  framework: springboot
+  build: maven
+  db: mysql
+  port: 8000
+  start_command: .\mvnw.cmd spring-boot:run
+  test_command: .\mvnw.cmd test
+  env_file: .env.example
+- name: post-java-springboot-gradle-jpa-postgresql
+  path: Backend/post/post-java-springboot-gradle-jpa-postgresql
+  kind: backend
+  domain: post
+  runtime: java
+  framework: springboot
+  build: gradle
+  db: postgresql
+  port: 8000
+  start_command: .\gradlew.bat bootRun
+  test_command: .\gradlew.bat test
+  env_file: .env.example
+- name: post-java-springboot-gradle-jpa-mysql
+  path: Backend/post/post-java-springboot-gradle-jpa-mysql
+  kind: backend
+  domain: post
+  runtime: java
+  framework: springboot
+  build: gradle
+  db: mysql
+  port: 8000
+  start_command: .\gradlew.bat bootRun
+  test_command: .\gradlew.bat test
+  env_file: .env.example
+- name: post-java-springboot-gradle-jdbc-postgresql
+  path: Backend/post/post-java-springboot-gradle-jdbc-postgresql
+  kind: backend
+  domain: post
+  runtime: java
+  framework: springboot
+  build: gradle
+  db: postgresql
+  port: 8000
+  start_command: .\gradlew.bat bootRun
+  test_command: .\gradlew.bat test
+  env_file: .env.example
+- name: post-java-springboot-gradle-jdbc-mysql
+  path: Backend/post/post-java-springboot-gradle-jdbc-mysql
+  kind: backend
+  domain: post
+  runtime: java
+  framework: springboot
+  build: gradle
+  db: mysql
+  port: 8000
+  start_command: .\gradlew.bat bootRun
+  test_command: .\gradlew.bat test
+  env_file: .env.example
+- name: post-typescript-nestjs-npm-typeorm-postgresql
+  path: Backend/post/post-typescript-nestjs-npm-typeorm-postgresql
+  kind: backend
+  domain: post
+  runtime: node
+  framework: nestjs
+  build: npm
+  db: postgresql
+  port: 8000
+  start_command: npm install; npm run start:dev
+  test_command: npm install; npm run test
+  env_file: .env.example
+- name: post-typescript-nestjs-npm-typeorm-mysql
+  path: Backend/post/post-typescript-nestjs-npm-typeorm-mysql
+  kind: backend
+  domain: post
+  runtime: node
+  framework: nestjs
+  build: npm
+  db: mysql
+  port: 8000
+  start_command: npm install; npm run start:dev
+  test_command: npm install; npm run test
+  env_file: .env.example
+- name: post-typescript-nestjs-npm-knex-postgresql
+  path: Backend/post/post-typescript-nestjs-npm-knex-postgresql
+  kind: backend
+  domain: post
+  runtime: node
+  framework: nestjs
+  build: npm
+  db: postgresql
+  port: 8000
+  start_command: npm install; npm run start:dev
+  test_command: npm install; npm run test
+  env_file: .env.example
+- name: post-typescript-nestjs-npm-knex-mysql
+  path: Backend/post/post-typescript-nestjs-npm-knex-mysql
+  kind: backend
+  domain: post
+  runtime: node
+  framework: nestjs
+  build: npm
+  db: mysql
+  port: 8000
+  start_command: npm install; npm run start:dev
+  test_command: npm install; npm run test
+  env_file: .env.example
+- name: shop-java-springboot-maven-jpa-postgresql
+  path: Backend/shop/shop-java-springboot-maven-jpa-postgresql
+  kind: backend
+  domain: shop
+  runtime: java
+  framework: springboot
+  build: maven
+  db: postgresql
+  port: 8000
+  start_command: .\mvnw.cmd spring-boot:run
+  test_command: .\mvnw.cmd test
+  env_file: .env.example
+- name: shop-java-springboot-maven-jpa-mysql
+  path: Backend/shop/shop-java-springboot-maven-jpa-mysql
+  kind: backend
+  domain: shop
+  runtime: java
+  framework: springboot
+  build: maven
+  db: mysql
+  port: 8000
+  start_command: .\mvnw.cmd spring-boot:run
+  test_command: .\mvnw.cmd test
+  env_file: .env.example
+- name: shop-java-springboot-maven-jdbc-postgresql
+  path: Backend/shop/shop-java-springboot-maven-jdbc-postgresql
+  kind: backend
+  domain: shop
+  runtime: java
+  framework: springboot
+  build: maven
+  db: postgresql
+  port: 8000
+  start_command: .\mvnw.cmd spring-boot:run
+  test_command: .\mvnw.cmd test
+  env_file: .env.example
+- name: shop-java-springboot-maven-jdbc-mysql
+  path: Backend/shop/shop-java-springboot-maven-jdbc-mysql
+  kind: backend
+  domain: shop
+  runtime: java
+  framework: springboot
+  build: maven
+  db: mysql
+  port: 8000
+  start_command: .\mvnw.cmd spring-boot:run
+  test_command: .\mvnw.cmd test
+  env_file: .env.example
+- name: shop-java-springboot-gradle-jpa-postgresql
+  path: Backend/shop/shop-java-springboot-gradle-jpa-postgresql
+  kind: backend
+  domain: shop
+  runtime: java
+  framework: springboot
+  build: gradle
+  db: postgresql
+  port: 8000
+  start_command: .\gradlew.bat bootRun
+  test_command: .\gradlew.bat test
+  env_file: .env.example
+- name: shop-java-springboot-gradle-jpa-mysql
+  path: Backend/shop/shop-java-springboot-gradle-jpa-mysql
+  kind: backend
+  domain: shop
+  runtime: java
+  framework: springboot
+  build: gradle
+  db: mysql
+  port: 8000
+  start_command: .\gradlew.bat bootRun
+  test_command: .\gradlew.bat test
+  env_file: .env.example
+- name: shop-java-springboot-gradle-jdbc-postgresql
+  path: Backend/shop/shop-java-springboot-gradle-jdbc-postgresql
+  kind: backend
+  domain: shop
+  runtime: java
+  framework: springboot
+  build: gradle
+  db: postgresql
+  port: 8000
+  start_command: .\gradlew.bat bootRun
+  test_command: .\gradlew.bat test
+  env_file: .env.example
+- name: shop-java-springboot-gradle-jdbc-mysql
+  path: Backend/shop/shop-java-springboot-gradle-jdbc-mysql
+  kind: backend
+  domain: shop
+  runtime: java
+  framework: springboot
+  build: gradle
+  db: mysql
+  port: 8000
+  start_command: .\gradlew.bat bootRun
+  test_command: .\gradlew.bat test
+  env_file: .env.example
+- name: shop-typescript-nestjs-npm-typeorm-postgresql
+  path: Backend/shop/shop-typescript-nestjs-npm-typeorm-postgresql
+  kind: backend
+  domain: shop
+  runtime: node
+  framework: nestjs
+  build: npm
+  db: postgresql
+  port: 8000
+  start_command: npm install; npm run start:dev
+  test_command: npm install; npm run test
+  env_file: .env.example
+- name: shop-typescript-nestjs-npm-typeorm-mysql
+  path: Backend/shop/shop-typescript-nestjs-npm-typeorm-mysql
+  kind: backend
+  domain: shop
+  runtime: node
+  framework: nestjs
+  build: npm
+  db: mysql
+  port: 8000
+  start_command: npm install; npm run start:dev
+  test_command: npm install; npm run test
+  env_file: .env.example
+- name: shop-typescript-nestjs-npm-knex-postgresql
+  path: Backend/shop/shop-typescript-nestjs-npm-knex-postgresql
+  kind: backend
+  domain: shop
+  runtime: node
+  framework: nestjs
+  build: npm
+  db: postgresql
+  port: 8000
+  start_command: npm install; npm run start:dev
+  test_command: npm install; npm run test
+  env_file: .env.example
+- name: shop-typescript-nestjs-npm-knex-mysql
+  path: Backend/shop/shop-typescript-nestjs-npm-knex-mysql
+  kind: backend
+  domain: shop
+  runtime: node
+  framework: nestjs
+  build: npm
+  db: mysql
+  port: 8000
+  start_command: npm install; npm run start:dev
+  test_command: npm install; npm run test
+  env_file: .env.example
+frontend:
+- name: web-post
+  path: Frontend/web-post
+  kind: frontend
+  domain: post
+  runtime: node
+  framework: react-vite
+  build: vite
+  db: none
+  port: 3000
+  start_command: npm install; npm run dev -- --host 0.0.0.0 --port $env:VITE_APP_PORT
+  test_command: npm install; npm run test
+  env_file: .env.example
+- name: web-shop
+  path: Frontend/web-shop
+  kind: frontend
+  domain: shop
+  runtime: node
+  framework: react-vite
+  build: vite
+  db: none
+  port: 3000
+  start_command: npm install; npm run dev -- --host 0.0.0.0 --port $env:VITE_APP_PORT
+  test_command: npm install; npm run test
+  env_file: .env.example
+database:
+- name: db-postgresql
+  path: Database/postgresql
+  kind: database
+  domain: shared
+  runtime: docker
+  framework: compose
+  build: docker
+  db: postgresql
+  port: 0
+  start_command: docker compose -f Database/docker/docker-compose.yml up -d
+  test_command: docker compose -f Database/docker/docker-compose.yml ps
+  env_file: Database/docker/.env
+- name: db-mysql
+  path: Database/mysql
+  kind: database
+  domain: shared
+  runtime: docker
+  framework: compose
+  build: docker
+  db: mysql
+  port: 0
+  start_command: docker compose -f Database/docker/docker-compose.yml up -d
+  test_command: docker compose -f Database/docker/docker-compose.yml ps
+  env_file: Database/docker/.env
+- name: db-redis
+  path: Database/docker
+  kind: database
+  domain: shared
+  runtime: docker
+  framework: compose
+  build: docker
+  db: redis
+  port: 0
+  start_command: docker compose -f Database/docker/docker-compose.yml up -d
+  test_command: docker compose -f Database/docker/docker-compose.yml ps
+  env_file: Database/docker/.env
+- name: db-elasticsearch
+  path: Database/docker
+  kind: database
+  domain: shared
+  runtime: docker
+  framework: compose
+  build: docker
+  db: elasticsearch
+  port: 0
+  start_command: docker compose -f Database/docker/docker-compose.yml up -d
+  test_command: docker compose -f Database/docker/docker-compose.yml ps
+  env_file: Database/docker/.env

@@ -1,0 +1,27 @@
+server:
+  port: ${SERVER_PORT:${APP_PORT:8000}}
+
+spring:
+  application:
+    name: ${APP_NAME:shop-java-springboot-gradle-jdbc-mysql}
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration
+      - org.springframework.boot.hibernate.autoconfigure.HibernateJpaAutoConfiguration
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/pb_shop}
+    username: ${DB_USER:project_bible}
+    password: ${DB_PASSWORD:project_bible}
+    driver-class-name: ${DB_DRIVER:com.mysql.cj.jdbc.Driver}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+springdoc:
+  swagger-ui:
+    path: /docs
+  api-docs:
+    path: /v3/api-docs
