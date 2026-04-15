@@ -1,11 +1,11 @@
 INSERT INTO admins (id, email, password_hash, name, status) VALUES
-  (1, 'admin-post-1@example.com', 'hashed-admin-1', 'Post Admin 1', 'ACTIVE'),
-  (2, 'admin-post-2@example.com', 'hashed-admin-2', 'Post Admin 2', 'ACTIVE');
+  (1, 'admin-post-1@example.com', '$2a$10$14w0lOj3Jm7WF2ZXQ6qvGuYqHaJu7.R3CB/ZOwznKOS77jUSSOvca', 'Post Admin 1', 'ACTIVE'),
+  (2, 'admin-post-2@example.com', '$2a$10$14w0lOj3Jm7WF2ZXQ6qvGuYqHaJu7.R3CB/ZOwznKOS77jUSSOvca', 'Post Admin 2', 'ACTIVE');
 
 INSERT INTO users (id, email, password_hash, nickname, status) VALUES
-  (1, 'post-user-1@example.com', 'hashed-user-1', 'writer-one', 'ACTIVE'),
-  (2, 'post-user-2@example.com', 'hashed-user-2', 'writer-two', 'ACTIVE'),
-  (3, 'post-user-3@example.com', 'hashed-user-3', 'reader-three', 'ACTIVE');
+  (1, 'post-user-1@example.com', '$2a$10$oxn/00RSwIT5Opg4SLhpG.p9huJkLMthMGsre/vlkx5GpOT.hy/oe', 'writer-one', 'ACTIVE'),
+  (2, 'post-user-2@example.com', '$2a$10$oxn/00RSwIT5Opg4SLhpG.p9huJkLMthMGsre/vlkx5GpOT.hy/oe', 'writer-two', 'ACTIVE'),
+  (3, 'post-user-3@example.com', '$2a$10$oxn/00RSwIT5Opg4SLhpG.p9huJkLMthMGsre/vlkx5GpOT.hy/oe', 'reader-three', 'ACTIVE');
 
 INSERT INTO boards (id, created_by_admin_id, name, description, display_order, status) VALUES
   (1, 1, 'free', '자유 게시판', 1, 'ACTIVE'),

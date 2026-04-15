@@ -1,10 +1,10 @@
 INSERT INTO admins (id, email, password_hash, name, status) VALUES
-  (1, 'admin-shop-1@example.com', 'hashed-shop-admin', 'Shop Admin', 'ACTIVE');
+  (1, 'admin-shop-1@example.com', '$2a$10$14w0lOj3Jm7WF2ZXQ6qvGuYqHaJu7.R3CB/ZOwznKOS77jUSSOvca', 'Shop Admin', 'ACTIVE');
 
 INSERT INTO users (id, email, password_hash, name, phone, status) VALUES
-  (1, 'shop-user-1@example.com', 'hashed-shop-user-1', 'Alice Kim', '010-1111-1111', 'ACTIVE'),
-  (2, 'shop-user-2@example.com', 'hashed-shop-user-2', 'Bob Lee', '010-2222-2222', 'ACTIVE'),
-  (3, 'shop-user-3@example.com', 'hashed-shop-user-3', 'Chris Park', '010-3333-3333', 'ACTIVE');
+  (1, 'shop-user-1@example.com', '$2a$10$oxn/00RSwIT5Opg4SLhpG.p9huJkLMthMGsre/vlkx5GpOT.hy/oe', 'Alice Kim', '010-1111-1111', 'ACTIVE'),
+  (2, 'shop-user-2@example.com', '$2a$10$oxn/00RSwIT5Opg4SLhpG.p9huJkLMthMGsre/vlkx5GpOT.hy/oe', 'Bob Lee', '010-2222-2222', 'ACTIVE'),
+  (3, 'shop-user-3@example.com', '$2a$10$oxn/00RSwIT5Opg4SLhpG.p9huJkLMthMGsre/vlkx5GpOT.hy/oe', 'Chris Park', '010-3333-3333', 'ACTIVE');
 
 INSERT INTO categories (id, name, display_order, status) VALUES
   (1, 'keyboard', 1, 'ACTIVE'),

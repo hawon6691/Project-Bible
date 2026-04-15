@@ -4,10 +4,6 @@ server:
 spring:
   application:
     name: ${APP_NAME:shop-java-springboot-maven-jpa-postgresql}
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration
-      - org.springframework.boot.hibernate.autoconfigure.HibernateJpaAutoConfiguration
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/pb_shop}
     username: ${DB_USER:project_bible}

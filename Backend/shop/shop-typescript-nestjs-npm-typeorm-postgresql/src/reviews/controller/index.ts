@@ -1,0 +1,3 @@
+export * from '../reviews.controller';
+
+
