@@ -1,3 +1,0 @@
-package com.projectbible.shop.gradle.jdbc.postgresql.auth.application;
-import java.util.Map; import org.springframework.stereotype.Service;
-@Service public class AuthService { public Map<String,Object> login(String email) { return Map.of("accessToken","mock-access-token-shop-java-springboot-gradle-jdbc-postgresql","refreshToken","mock-refresh-token-shop-java-springboot-gradle-jdbc-postgresql","tokenType","Bearer","email",email); } public Map<String,Object> refresh() { return Map.of("accessToken","mock-access-token-refreshed-shop-java-springboot-gradle-jdbc-postgresql","refreshToken","mock-refresh-token-refreshed-shop-java-springboot-gradle-jdbc-postgresql","tokenType","Bearer"); } public Map<String,Object> logout() { return Map.of("loggedOut",true); } }

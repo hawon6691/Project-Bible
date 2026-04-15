@@ -25,15 +25,15 @@
 
 | 구분 | 계산식 | 결과 |
 | --- | --- | --- |
-| Java | `2 build tools x 2 data access x 2 db` | `8개` |
-| TypeScript | `1 build tool x 2 data access x 2 db` | `4개` |
+| Java | `2 build tools x 2 db` | `4개` |
+| TypeScript | `1 build tool x 2 db` | `2개` |
 | 합계 | `8 + 4` | `12개` |
 
 ## 폴더명 규칙
 
 실제 저장소 폴더명과 CLI 인자는 아래 규칙으로 통일한다.
 
-`<domain>-<language>-<framework>-<build>-<dataaccess>-<db>`
+`<domain>-<language>-<framework>-<build>-<db>`
 
 작성 규칙:
 
@@ -49,10 +49,10 @@
 
 예시:
 
-- `shop-java-springboot-maven-jpa-postgresql`
-- `shop-java-springboot-gradle-jdbc-mysql`
-- `shop-typescript-nestjs-npm-typeorm-postgresql`
-- `shop-typescript-nestjs-npm-knex-mysql`
+- `shop-java-springboot-maven-postgresql`
+- `shop-java-springboot-gradle-mysql`
+- `shop-typescript-nestjs-typeorm-postgresql`
+- `shop-typescript-nestjs-knex-mysql`
 
 ## 백엔드 폴더 배치 규칙
 
@@ -62,10 +62,10 @@
 
 예시:
 
-- `Backend/shop/shop-java-springboot-maven-jpa-postgresql`
-- `Backend/shop/shop-java-springboot-gradle-jdbc-mysql`
-- `Backend/shop/shop-typescript-nestjs-npm-typeorm-postgresql`
-- `Backend/shop/shop-typescript-nestjs-npm-knex-mysql`
+- `Backend/shop/shop-java-springboot-maven-postgresql`
+- `Backend/shop/shop-java-springboot-gradle-mysql`
+- `Backend/shop/shop-typescript-nestjs-npm-postgresql`
+- `Backend/shop/shop-typescript-nestjs-npm-mysql`
 
 ## 언어별 생성 프로젝트 기준
 
@@ -73,23 +73,17 @@
 
 | 번호 | 프로젝트 폴더명 |
 | --- | --- |
-| 1 | `shop-java-springboot-maven-jdbc-postgresql` |
-| 2 | `shop-java-springboot-maven-jpa-postgresql` |
-| 3 | `shop-java-springboot-maven-jdbc-mysql` |
-| 4 | `shop-java-springboot-maven-jpa-mysql` |
-| 5 | `shop-java-springboot-gradle-jdbc-postgresql` |
-| 6 | `shop-java-springboot-gradle-jpa-postgresql` |
-| 7 | `shop-java-springboot-gradle-jdbc-mysql` |
-| 8 | `shop-java-springboot-gradle-jpa-mysql` |
+| 1 | `shop-java-springboot-maven-postgresql` |
+| 2 | `shop-java-springboot-maven-mysql` |
+| 3 | `shop-java-springboot-gradle-postgresql` |
+| 4 | `shop-java-springboot-gradle-mysql` |
 
 ### TypeScript 생성 프로젝트
 
 | 번호 | 프로젝트 폴더명 |
 | --- | --- |
-| 1 | `shop-typescript-nestjs-npm-knex-postgresql` |
-| 2 | `shop-typescript-nestjs-npm-typeorm-postgresql` |
-| 3 | `shop-typescript-nestjs-npm-knex-mysql` |
-| 4 | `shop-typescript-nestjs-npm-typeorm-mysql` |
+| 1 | `shop-typescript-nestjs-npm-postgresql` |
+| 2 | `shop-typescript-nestjs-npm-mysql` |
 
 ## 공용 CLI 위치와 역할
 
@@ -114,8 +108,8 @@ CLI 식별 기준:
 
 예시 인자:
 
-- `shop-java-springboot-maven-jpa-postgresql`
-- `shop-typescript-nestjs-npm-knex-mysql`
+- `shop-java-springboot-maven-postgresql`
+- `shop-typescript-nestjs-npm-mysql`
 
 ## 결론
 

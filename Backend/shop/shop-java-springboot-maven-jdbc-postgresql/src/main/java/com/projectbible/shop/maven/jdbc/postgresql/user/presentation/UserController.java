@@ -1,3 +1,0 @@
-package com.projectbible.shop.maven.jdbc.postgresql.user.presentation;
-import com.projectbible.shop.maven.jdbc.postgresql.common.api.ApiResponse; import com.projectbible.shop.maven.jdbc.postgresql.user.application.UserService; import io.swagger.v3.oas.annotations.Operation; import io.swagger.v3.oas.annotations.tags.Tag; import java.util.Map; import org.springframework.web.bind.annotation.*;
-@Tag(name="users") @RestController @RequestMapping("/api/v1/users") public class UserController { private final UserService service; public UserController(UserService service) { this.service=service; } @Operation(summary="Current user") @GetMapping("/me") public ApiResponse<Map<String,Object>> me() { return ApiResponse.success(service.me()); } }

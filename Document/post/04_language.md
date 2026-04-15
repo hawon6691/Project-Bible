@@ -25,15 +25,15 @@
 
 | 구분 | 계산식 | 결과 |
 | --- | --- | --- |
-| Java | `2 build tools x 2 data access x 2 db` | `8개` |
-| TypeScript | `1 build tool x 2 data access x 2 db` | `4개` |
-| 합계 | `8 + 4` | `12개` |
+| Java | `2 build tools x 2 db` | `4개` |
+| TypeScript | `1 build tool x 2 db` | `2개` |
+| 합계 | `4 + 2` | `6개` |
 
 ## 폴더명 규칙
 
 실제 저장소 폴더명과 CLI 인자는 아래 규칙으로 통일한다.
 
-`<domain>-<language>-<framework>-<build>-<dataaccess>-<db>`
+`<domain>-<language>-<framework>-<build>-<db>`
 
 작성 규칙:
 
@@ -73,23 +73,17 @@
 
 | 번호 | 프로젝트 폴더명 |
 | --- | --- |
-| 1 | `post-java-springboot-maven-jdbc-postgresql` |
-| 2 | `post-java-springboot-maven-jpa-postgresql` |
-| 3 | `post-java-springboot-maven-jdbc-mysql` |
-| 4 | `post-java-springboot-maven-jpa-mysql` |
-| 5 | `post-java-springboot-gradle-jdbc-postgresql` |
-| 6 | `post-java-springboot-gradle-jpa-postgresql` |
-| 7 | `post-java-springboot-gradle-jdbc-mysql` |
-| 8 | `post-java-springboot-gradle-jpa-mysql` |
+| 1 | `post-java-springboot-maven-jpa-postgresql` |
+| 2 | `post-java-springboot-maven-jpa-mysql` |
+| 3 | `post-java-springboot-gradle-jpa-postgresql` |
+| 4 | `post-java-springboot-gradle-jpa-mysql` |
 
 ### TypeScript 생성 프로젝트
 
 | 번호 | 프로젝트 폴더명 |
 | --- | --- |
-| 1 | `post-typescript-nestjs-npm-knex-postgresql` |
-| 2 | `post-typescript-nestjs-npm-typeorm-postgresql` |
-| 3 | `post-typescript-nestjs-npm-knex-mysql` |
-| 4 | `post-typescript-nestjs-npm-typeorm-mysql` |
+| 1 | `post-typescript-nestjs-npm-typeorm-postgresql` |
+| 2 | `post-typescript-nestjs-npm-typeorm-mysql` |
 
 ## 공용 CLI 위치와 역할
 
