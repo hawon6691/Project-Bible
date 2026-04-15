@@ -49,9 +49,9 @@
 
 예시:
 
-- `post-java-springboot-maven-jpa-postgresql`
+- `post-java-springboot-maven-postgresql`
 - `post-java-springboot-gradle-jdbc-mysql`
-- `post-typescript-nestjs-npm-typeorm-postgresql`
+- `post-typescript-nestjs-npm-postgresql`
 - `post-typescript-nestjs-npm-knex-mysql`
 
 ## 백엔드 폴더 배치 규칙
@@ -62,9 +62,9 @@
 
 예시:
 
-- `Backend/post/post-java-springboot-maven-jpa-postgresql`
+- `Backend/post/post-java-springboot-maven-postgresql`
 - `Backend/post/post-java-springboot-gradle-jdbc-mysql`
-- `Backend/post/post-typescript-nestjs-npm-typeorm-postgresql`
+- `Backend/post/post-typescript-nestjs-npm-postgresql`
 - `Backend/post/post-typescript-nestjs-npm-knex-mysql`
 
 ## 언어별 생성 프로젝트 기준
@@ -73,17 +73,17 @@
 
 | 번호 | 프로젝트 폴더명 |
 | --- | --- |
-| 1 | `post-java-springboot-maven-jpa-postgresql` |
-| 2 | `post-java-springboot-maven-jpa-mysql` |
-| 3 | `post-java-springboot-gradle-jpa-postgresql` |
-| 4 | `post-java-springboot-gradle-jpa-mysql` |
+| 1 | `post-java-springboot-maven-postgresql` |
+| 2 | `post-java-springboot-maven-mysql` |
+| 3 | `post-java-springboot-gradle-postgresql` |
+| 4 | `post-java-springboot-gradle-mysql` |
 
 ### TypeScript 생성 프로젝트
 
 | 번호 | 프로젝트 폴더명 |
 | --- | --- |
-| 1 | `post-typescript-nestjs-npm-typeorm-postgresql` |
-| 2 | `post-typescript-nestjs-npm-typeorm-mysql` |
+| 1 | `post-typescript-nestjs-npm-postgresql` |
+| 2 | `post-typescript-nestjs-npm-mysql` |
 
 ## 공용 CLI 위치와 역할
 
@@ -108,7 +108,7 @@ CLI 식별 기준:
 
 예시 인자:
 
-- `post-java-springboot-maven-jpa-postgresql`
+- `post-java-springboot-maven-postgresql`
 - `post-typescript-nestjs-npm-knex-mysql`
 
 ## 결론

@@ -17,9 +17,9 @@
 예시:
 
 - `post-java-springboot-maven-jdbc-postgresql`
-- `post-java-springboot-gradle-jpa-mysql`
+- `post-java-springboot-gradle-mysql`
 - `post-typescript-nestjs-npm-knex-postgresql`
-- `post-typescript-nestjs-npm-typeorm-mysql`
+- `post-typescript-nestjs-npm-mysql`
 
 ## 테스트 계층
 

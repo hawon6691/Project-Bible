@@ -1,6 +1,6 @@
 backend:
-- name: post-java-springboot-maven-jpa-postgresql
-  path: Backend/post/post-java-springboot-maven-jpa-postgresql
+- name: post-java-springboot-maven-postgresql
+  path: Backend/post/post-java-springboot-maven-postgresql
   kind: backend
   domain: post
   runtime: java
@@ -11,8 +11,8 @@ backend:
   start_command: .\mvnw.cmd spring-boot:run
   test_command: .\mvnw.cmd test
   env_file: .env.example
-- name: post-java-springboot-maven-jpa-mysql
-  path: Backend/post/post-java-springboot-maven-jpa-mysql
+- name: post-java-springboot-maven-mysql
+  path: Backend/post/post-java-springboot-maven-mysql
   kind: backend
   domain: post
   runtime: java
@@ -47,8 +47,8 @@ backend:
   start_command: .\mvnw.cmd spring-boot:run
   test_command: .\mvnw.cmd test
   env_file: .env.example
-- name: post-java-springboot-gradle-jpa-postgresql
-  path: Backend/post/post-java-springboot-gradle-jpa-postgresql
+- name: post-java-springboot-gradle-postgresql
+  path: Backend/post/post-java-springboot-gradle-postgresql
   kind: backend
   domain: post
   runtime: java
@@ -59,8 +59,8 @@ backend:
   start_command: .\gradlew.bat bootRun
   test_command: .\gradlew.bat test
   env_file: .env.example
-- name: post-java-springboot-gradle-jpa-mysql
-  path: Backend/post/post-java-springboot-gradle-jpa-mysql
+- name: post-java-springboot-gradle-mysql
+  path: Backend/post/post-java-springboot-gradle-mysql
   kind: backend
   domain: post
   runtime: java
@@ -95,8 +95,8 @@ backend:
   start_command: .\gradlew.bat bootRun
   test_command: .\gradlew.bat test
   env_file: .env.example
-- name: post-typescript-nestjs-npm-typeorm-postgresql
-  path: Backend/post/post-typescript-nestjs-npm-typeorm-postgresql
+- name: post-typescript-nestjs-npm-postgresql
+  path: Backend/post/post-typescript-nestjs-npm-postgresql
   kind: backend
   domain: post
   runtime: node
@@ -107,8 +107,8 @@ backend:
   start_command: npm install; npm run start:dev
   test_command: npm install; npm run test
   env_file: .env.example
-- name: post-typescript-nestjs-npm-typeorm-mysql
-  path: Backend/post/post-typescript-nestjs-npm-typeorm-mysql
+- name: post-typescript-nestjs-npm-mysql
+  path: Backend/post/post-typescript-nestjs-npm-mysql
   kind: backend
   domain: post
   runtime: node
@@ -143,8 +143,8 @@ backend:
   start_command: npm install; npm run start:dev
   test_command: npm install; npm run test
   env_file: .env.example
-- name: shop-java-springboot-maven-jpa-postgresql
-  path: Backend/shop/shop-java-springboot-maven-jpa-postgresql
+- name: shop-java-springboot-maven-postgresql
+  path: Backend/shop/shop-java-springboot-maven-postgresql
   kind: backend
   domain: shop
   runtime: java
@@ -155,8 +155,8 @@ backend:
   start_command: .\mvnw.cmd spring-boot:run
   test_command: .\mvnw.cmd test
   env_file: .env.example
-- name: shop-java-springboot-maven-jpa-mysql
-  path: Backend/shop/shop-java-springboot-maven-jpa-mysql
+- name: shop-java-springboot-maven-mysql
+  path: Backend/shop/shop-java-springboot-maven-mysql
   kind: backend
   domain: shop
   runtime: java
@@ -191,8 +191,8 @@ backend:
   start_command: .\mvnw.cmd spring-boot:run
   test_command: .\mvnw.cmd test
   env_file: .env.example
-- name: shop-java-springboot-gradle-jpa-postgresql
-  path: Backend/shop/shop-java-springboot-gradle-jpa-postgresql
+- name: shop-java-springboot-gradle-postgresql
+  path: Backend/shop/shop-java-springboot-gradle-postgresql
   kind: backend
   domain: shop
   runtime: java
@@ -203,8 +203,8 @@ backend:
   start_command: .\gradlew.bat bootRun
   test_command: .\gradlew.bat test
   env_file: .env.example
-- name: shop-java-springboot-gradle-jpa-mysql
-  path: Backend/shop/shop-java-springboot-gradle-jpa-mysql
+- name: shop-java-springboot-gradle-mysql
+  path: Backend/shop/shop-java-springboot-gradle-mysql
   kind: backend
   domain: shop
   runtime: java
@@ -239,8 +239,8 @@ backend:
   start_command: .\gradlew.bat bootRun
   test_command: .\gradlew.bat test
   env_file: .env.example
-- name: shop-typescript-nestjs-npm-typeorm-postgresql
-  path: Backend/shop/shop-typescript-nestjs-npm-typeorm-postgresql
+- name: shop-typescript-nestjs-npm-postgresql
+  path: Backend/shop/shop-typescript-nestjs-npm-postgresql
   kind: backend
   domain: shop
   runtime: node
@@ -251,8 +251,8 @@ backend:
   start_command: npm install; npm run start:dev
   test_command: npm install; npm run test
   env_file: .env.example
-- name: shop-typescript-nestjs-npm-typeorm-mysql
-  path: Backend/shop/shop-typescript-nestjs-npm-typeorm-mysql
+- name: shop-typescript-nestjs-npm-mysql
+  path: Backend/shop/shop-typescript-nestjs-npm-mysql
   kind: backend
   domain: shop
   runtime: node

@@ -16,7 +16,7 @@ public class HealthController {
     public ApiResponse<Map<String, Object>> health() {
         return ApiResponse.success(Map.of(
             "status", "UP",
-            "service", "post-java-springboot-maven-jpa-postgresql",
+            "service", "post-java-springboot-maven-postgresql",
             "domain", "post"
         ));
     }

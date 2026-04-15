@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.projectbible</groupId>
-	<artifactId>shop-java-springboot-maven-jpa-postgresql</artifactId>
+	<artifactId>shop-java-springboot-maven-postgresql</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>shop-java-springboot-maven-jpa-postgresql</name>
+	<name>shop-java-springboot-maven-postgresql</name>
 	<description/>
 	<url/>
 	<licenses>

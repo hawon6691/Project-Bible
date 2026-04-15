@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.projectbible</groupId>
-	<artifactId>shop-java-springboot-maven-jpa-mysql</artifactId>
+	<artifactId>shop-java-springboot-maven-mysql</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>shop-java-springboot-maven-jpa-mysql</name>
+	<name>shop-java-springboot-maven-mysql</name>
 	<description/>
 	<url/>
 	<licenses>

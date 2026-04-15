@@ -70,8 +70,8 @@ python -m pbcli.main list
 
 ```yaml
 backend:
-  - name: post-java-springboot-maven-jpa-postgresql
-    path: Backend/post/post-java-springboot-maven-jpa-postgresql
+  - name: post-java-springboot-maven-postgresql
+    path: Backend/post/post-java-springboot-maven-postgresql
     kind: backend
     domain: post
     runtime: java

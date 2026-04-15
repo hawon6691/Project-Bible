@@ -26,9 +26,9 @@
 
 예시:
 
-- `shop-java-springboot-maven-jpa-postgresql-ci.yml`
+- `shop-java-springboot-maven-postgresql-ci.yml`
 - `shop-java-springboot-gradle-jdbc-mysql-ci.yml`
-- `shop-typescript-nestjs-npm-typeorm-postgresql-ci.yml`
+- `shop-typescript-nestjs-npm-postgresql-ci.yml`
 - `shop-typescript-nestjs-npm-knex-mysql-ci.yml`
 
 경로 감시 규칙:

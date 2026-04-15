@@ -1,3 +1,3 @@
-# post-java-springboot-maven-jpa-postgresql
+# post-java-springboot-maven-postgresql
 
 Spring Boot baseline for `post` using `maven`, `jpa`, `postgresql`.

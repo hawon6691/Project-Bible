@@ -10,7 +10,7 @@ async function bootstrap(): Promise<void> {
   app.useGlobalFilters(new HttpExceptionFilter());
 
   const config = new DocumentBuilder()
-    .setTitle("post-typescript-nestjs-npm-typeorm-postgresql API")
+    .setTitle("post-typescript-nestjs-npm-postgresql API")
     .setDescription("v1 API for post service")
     .setVersion("v1")
     .addTag("auth")

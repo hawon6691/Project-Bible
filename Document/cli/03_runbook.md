@@ -32,7 +32,7 @@ pb list
 
 예시 목표:
 
-`post-java-springboot-maven-jpa-postgresql`를 CLI에 연결된 백엔드 타깃으로 유지하거나 추가한다.
+`post-java-springboot-maven-postgresql`를 CLI에 연결된 백엔드 타깃으로 유지하거나 추가한다.
 
 절차:
 

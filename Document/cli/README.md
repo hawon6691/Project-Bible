@@ -44,5 +44,5 @@
 
 예시:
 
-- `post-java-springboot-maven-jpa-postgresql`
-- `shop-typescript-nestjs-npm-typeorm-mysql`
+- `post-java-springboot-maven-postgresql`
+- `shop-typescript-nestjs-npm-mysql`

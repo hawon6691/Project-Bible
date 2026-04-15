@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: ${APP_NAME:shop-java-springboot-maven-jpa-postgresql}
+    name: ${APP_NAME:shop-java-springboot-maven-postgresql}
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/pb_shop}
     username: ${DB_USER:project_bible}

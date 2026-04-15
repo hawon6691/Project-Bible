@@ -22,9 +22,9 @@
 | 명령 | 인자 | 설명 | 현재 상태 | 대상 그룹 | 예시 |
 | --- | --- | --- | --- | --- | --- |
 | `pb list` | 없음 | 등록된 백엔드, 프론트, DB 타깃 목록을 출력한다. | `implemented` | 공용 | `pb list` |
-| `pb up <target> [--port N]` | `target`, `port` | 지정한 타깃을 새 PowerShell 창에서 기동한다. 포트를 주지 않으면 그룹 기준 자동 할당한다. | `implemented` | backend, frontend | `pb up post-java-springboot-maven-jpa-postgresql --port 9010` |
+| `pb up <target> [--port N]` | `target`, `port` | 지정한 타깃을 새 PowerShell 창에서 기동한다. 포트를 주지 않으면 그룹 기준 자동 할당한다. | `implemented` | backend, frontend | `pb up post-java-springboot-maven-postgresql --port 9010` |
 | `pb down <target>` | `target` | CLI가 추적 중인 대상 프로세스를 종료한다. | `implemented` | backend, frontend | `pb down web-shop` |
-| `pb test <target>` | `target` | 지정한 타깃의 테스트 명령을 현재 콘솔에서 실행한다. | `implemented` | backend, frontend | `pb test shop-typescript-nestjs-npm-typeorm-postgresql` |
+| `pb test <target>` | `target` | 지정한 타깃의 테스트 명령을 현재 콘솔에서 실행한다. | `implemented` | backend, frontend | `pb test shop-typescript-nestjs-npm-postgresql` |
 | `pb db up` | 없음 | 공용 DB 인프라를 `docker compose up -d`로 기동한다. | `implemented` | database | `pb db up` |
 | `pb db down` | 없음 | 공용 DB 인프라를 `docker compose down`으로 종료한다. | `implemented` | database | `pb db down` |
 | `pb db reset <engine> <domain>` | `engine`, `domain` | 지정한 DB 엔진과 도메인 기준으로 DB를 drop/create 후 schema와 seed를 다시 적용한다. | `implemented` | database | `pb db reset postgresql post` |
@@ -58,7 +58,7 @@
 
 ```text
 [backend]
-- post-java-springboot-maven-jpa-postgresql: Backend/post/post-java-springboot-maven-jpa-postgresql
+- post-java-springboot-maven-postgresql: Backend/post/post-java-springboot-maven-postgresql
 - ...
 [frontend]
 - web-post: Frontend/web-post
@@ -73,7 +73,7 @@
 ### 대표 명령
 
 ```text
-Started post-java-springboot-maven-jpa-postgresql in new PowerShell window (PID ..., port 8000)
+Started post-java-springboot-maven-postgresql in new PowerShell window (PID ..., port 8000)
 Stopped web-shop (PID ..., port 3001)
 ```
 

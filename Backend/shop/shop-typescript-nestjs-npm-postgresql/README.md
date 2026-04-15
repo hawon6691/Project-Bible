@@ -1,3 +1,3 @@
-# shop-typescript-nestjs-npm-typeorm-postgresql
+# shop-typescript-nestjs-npm-postgresql
 
 NestJS baseline for `shop` using `typeorm` and `postgresql`.

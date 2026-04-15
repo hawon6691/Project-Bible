@@ -12,7 +12,7 @@ export class AppController {
   health() {
     return ok({
       status: "UP",
-      service: "post-typescript-nestjs-npm-typeorm-postgresql",
+      service: "post-typescript-nestjs-npm-postgresql",
       domain: "post",
     });
   }

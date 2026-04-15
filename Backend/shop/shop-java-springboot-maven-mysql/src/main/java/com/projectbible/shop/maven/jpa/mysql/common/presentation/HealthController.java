@@ -1,3 +1,3 @@
 package com.projectbible.shop.maven.jpa.mysql.common.presentation;
 import com.projectbible.shop.maven.jpa.mysql.common.api.ApiResponse; import io.swagger.v3.oas.annotations.Operation; import io.swagger.v3.oas.annotations.tags.Tag; import java.util.Map; import org.springframework.web.bind.annotation.*;
-@Tag(name="health") @RestController @RequestMapping("/api/v1/health") public class HealthController { @Operation(summary="Health check") @GetMapping public ApiResponse<Map<String,Object>> health() { return ApiResponse.success(Map.of("status","UP","service","shop-java-springboot-maven-jpa-mysql","domain","shop")); } }
+@Tag(name="health") @RestController @RequestMapping("/api/v1/health") public class HealthController { @Operation(summary="Health check") @GetMapping public ApiResponse<Map<String,Object>> health() { return ApiResponse.success(Map.of("status","UP","service","shop-java-springboot-maven-mysql","domain","shop")); } }
