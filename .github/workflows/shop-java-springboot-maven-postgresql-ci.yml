@@ -1,0 +1,39 @@
+name: shop-java-springboot-maven-postgresql CI
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/shop-java-springboot-maven-postgresql-ci.yml"
+      - "Backend/shop/shop-java-springboot-maven-postgresql/**"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/shop-java-springboot-maven-postgresql-ci.yml"
+      - "Backend/shop/shop-java-springboot-maven-postgresql/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: Backend/shop/shop-java-springboot-maven-postgresql
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+      - run: chmod +x mvnw
+      - run: ./mvnw -B test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: shop-java-springboot-maven-postgresql-test-reports
+          path: Backend/shop/shop-java-springboot-maven-postgresql/target/surefire-reports/
+          if-no-files-found: ignore
