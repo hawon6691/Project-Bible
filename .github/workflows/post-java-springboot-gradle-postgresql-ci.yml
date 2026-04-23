@@ -5,11 +5,15 @@ on:
     paths:
       - ".github/workflows/post-java-springboot-gradle-postgresql-ci.yml"
       - "Backend/post/post-java-springboot-gradle-postgresql/**"
+      - "Database/postgresql/post/**"
+      - "Tools/ci/load_postgresql.sh"
   push:
     branches: [main]
     paths:
       - ".github/workflows/post-java-springboot-gradle-postgresql-ci.yml"
       - "Backend/post/post-java-springboot-gradle-postgresql/**"
+      - "Database/postgresql/post/**"
+      - "Tools/ci/load_postgresql.sh"
   workflow_dispatch:
 
 permissions:
@@ -22,13 +26,45 @@ defaults:
 jobs:
   test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: project_bible
+          POSTGRES_PASSWORD: project_bible
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U project_bible -d postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: project_bible
+      POSTGRES_PASSWORD: project_bible
+      DB_HOST: localhost
+      DB_PORT: 5432
+      DB_NAME: pb_post
+      DB_USER: project_bible
+      DB_PASSWORD: project_bible
+      JWT_SECRET: ci-access-secret
+      JWT_REFRESH_SECRET: ci-refresh-secret
     steps:
       - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y postgresql-client
+        working-directory: .
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: "21"
           cache: gradle
+      - run: chmod +x Tools/ci/load_postgresql.sh
+        working-directory: .
+      - run: bash Tools/ci/load_postgresql.sh post pb_post
+        working-directory: .
       - run: chmod +x gradlew
       - run: ./gradlew test
       - uses: actions/upload-artifact@v4

@@ -5,11 +5,15 @@ on:
     paths:
       - ".github/workflows/post-typescript-nestjs-npm-mysql-ci.yml"
       - "Backend/post/post-typescript-nestjs-npm-mysql/**"
+      - "Database/mysql/post/**"
+      - "Tools/ci/load_mysql.sh"
   push:
     branches: [main]
     paths:
       - ".github/workflows/post-typescript-nestjs-npm-mysql-ci.yml"
       - "Backend/post/post-typescript-nestjs-npm-mysql/**"
+      - "Database/mysql/post/**"
+      - "Tools/ci/load_mysql.sh"
   workflow_dispatch:
 
 permissions:
@@ -22,13 +26,46 @@ defaults:
 jobs:
   test:
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: project_bible
+          MYSQL_DATABASE: mysql
+          MYSQL_USER: project_bible
+          MYSQL_PASSWORD: project_bible
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -pproject_bible"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=20
+    env:
+      MYSQL_HOST: 127.0.0.1
+      MYSQL_PORT: 3306
+      MYSQL_USER: project_bible
+      MYSQL_PASSWORD: project_bible
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_NAME: pb_post
+      DB_USER: project_bible
+      DB_PASSWORD: project_bible
+      JWT_SECRET: ci-access-secret
+      JWT_REFRESH_SECRET: ci-refresh-secret
     steps:
       - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y default-mysql-client
+        working-directory: .
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: npm
           cache-dependency-path: Backend/post/post-typescript-nestjs-npm-mysql/package-lock.json
+      - run: chmod +x Tools/ci/load_mysql.sh
+        working-directory: .
+      - run: bash Tools/ci/load_mysql.sh post pb_post
+        working-directory: .
       - run: npm ci
       - run: npm run build
       - run: npm run test:e2e
