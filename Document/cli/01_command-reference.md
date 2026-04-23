@@ -14,7 +14,8 @@
 - `pb up`은 새 PowerShell 창을 열어 대상 서버를 실행한다.
 - `pb up`은 `--port`가 없으면 backend는 `8000`, frontend는 `3000`부터 자동 증가 포트를 할당한다.
 - backend Swagger 기본 경로는 `/docs`다.
-- `pb down`은 CLI 런타임 상태에 저장된 PID를 종료한다.
+- `pb down <target>`은 CLI 런타임 상태에 저장된 PID를 종료한다.
+- `pb down --port N`은 해당 포트의 CLI 추적 프로세스 또는 포트를 점유 중인 프로세스를 종료한다.
 - `pb db up`, `pb db down`, `pb db reset`은 Docker 기반 DB 명령으로 동작한다.
 
 ## 명령어 표
@@ -24,12 +25,16 @@
 | `pb list` | 없음 | 등록된 백엔드, 프론트, DB 타깃 목록을 출력한다. | `implemented` | 공용 | `pb list` |
 | `pb up <target> [--port N]` | `target`, `port` | 지정한 타깃을 새 PowerShell 창에서 기동한다. 포트를 주지 않으면 그룹 기준 자동 할당한다. | `implemented` | backend, frontend | `pb up post-java-springboot-maven-postgresql --port 9010` |
 | `pb down <target>` | `target` | CLI가 추적 중인 대상 프로세스를 종료한다. | `implemented` | backend, frontend | `pb down web-shop` |
+| `pb down --port N` | `port` | 지정한 포트를 점유 중인 CLI 추적 프로세스 또는 로컬 프로세스를 종료한다. | `implemented` | backend, frontend, local process | `pb down --port 3000` |
 | `pb test <target>` | `target` | 지정한 타깃의 테스트 명령을 현재 콘솔에서 실행한다. | `implemented` | backend, frontend | `pb test shop-typescript-nestjs-npm-postgresql` |
 | `pb db up` | 없음 | 공용 DB 인프라를 `docker compose up -d`로 기동한다. | `implemented` | database | `pb db up` |
 | `pb db down` | 없음 | 공용 DB 인프라를 `docker compose down`으로 종료한다. | `implemented` | database | `pb db down` |
 | `pb db reset <engine> <domain>` | `engine`, `domain` | 지정한 DB 엔진과 도메인 기준으로 DB를 drop/create 후 schema와 seed를 다시 적용한다. | `implemented` | database | `pb db reset postgresql post` |
 | `pb doctor` | 없음 | 로컬 실행 환경과 필수 도구 상태를 점검한다. | `implemented` | 공용 | `pb doctor` |
 | `pb gui` | 없음 | Tkinter 기반 로컬 GUI를 실행한다. | `implemented` | 공용 | `pb gui` |
+| `pb search <keyword>` | `keyword` | 명령어, 예시, 등록 타깃을 키워드로 검색한다. | `implemented` | 공용 | `pb search web` |
+| `pb --help`, `pb /?` | 없음 | 전체 명령 도움말을 출력한다. | `implemented` | 공용 | `pb /?` |
+| `pb <command> --help`, `pb <command> /?` | `command` | 특정 명령 도움말을 출력한다. | `implemented` | 공용 | `pb up /?` |
 
 ## 현재 구현 상태
 
@@ -37,12 +42,14 @@
 
 - `pb list`는 `projects.yaml`을 읽어 `backend`, `frontend`, `database` 그룹별 타깃을 출력한다.
 - `pb up`은 등록된 `start_command`를 새 PowerShell 창에서 실행하고 PID와 할당 포트를 기록한다.
-- `pb down`은 저장된 PID를 기준으로 대상 프로세스를 종료한다.
+- `pb down`은 저장된 PID 또는 지정 포트를 기준으로 대상 프로세스를 종료한다.
 - `pb test`는 등록된 `test_command`를 해당 프로젝트 경로에서 실행한다.
 - `pb db up`, `pb db down`은 `Database/docker/docker-compose.yml`을 기준으로 동작한다.
 - `pb db reset`은 엔진별 SQL 파일을 컨테이너 내부 DB에 다시 적용한다.
 - `pb doctor`는 Python, Node, npm, Java, Docker 존재 여부를 점검한다.
 - `pb gui`는 Tkinter GUI를 띄워 같은 기능을 호출한다.
+- `pb search`는 명령어와 등록 타깃 이름을 키워드로 검색한다.
+- `/?`는 `--help`와 같은 도움말 alias로 처리한다.
 
 ## 구성 메모
 
@@ -75,11 +82,14 @@
 ```text
 Started post-java-springboot-maven-postgresql in new PowerShell window (PID ..., port 8000)
 Stopped web-shop (PID ..., port 3001)
+Stopped untracked process using port 3000 (PID ...)
 ```
 
 ## 오류 및 주의사항
 
 - `target`이 `projects.yaml`에 없으면 명령은 실패한다.
 - 자동 포트는 CLI가 이미 추적 중인 프로세스와 현재 점유 중인 포트를 피해서 선택한다.
+- 사용자가 `--port`로 지정한 포트가 이미 열려 있으면 CLI는 점유 중인 CLI 타깃 또는 PID를 알려주고, `pb down <target>` 또는 `pb down --port N`으로 먼저 중지하라고 안내한다.
 - CLI 식별자와 실제 폴더명이 다르면 운영 규칙이 깨지므로 허용하지 않는다.
-- `pb down`은 `pb up`으로 기록된 PID가 없으면 종료할 대상을 찾지 못한다.
+- `pb down <target>`은 `pb up`으로 기록된 PID가 없으면 종료할 대상을 찾지 못한다.
+- `pb down --port N`은 CLI 상태에 없는 프로세스도 포트를 점유 중이면 `taskkill`로 종료할 수 있으므로 포트 번호를 확인하고 실행해야 한다.
