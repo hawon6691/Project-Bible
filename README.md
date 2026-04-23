@@ -2,6 +2,12 @@
 
 `Project-Bible`는 동일한 `post`/`shop` 도메인을 여러 기술 스택으로 구현하고, 공용 `Database`, `Tools/cli`, 프론트엔드 앱, 문서 세트를 함께 관리하는 저장소입니다.
 
+[![frontend-cli CI](https://github.com/hawon6691/Project-Bible/actions/workflows/frontend-cli-ci.yml/badge.svg)](https://github.com/hawon6691/Project-Bible/actions/workflows/frontend-cli-ci.yml)
+[![post-java-springboot-maven-postgresql CI](https://github.com/hawon6691/Project-Bible/actions/workflows/post-java-springboot-maven-postgresql-ci.yml/badge.svg)](https://github.com/hawon6691/Project-Bible/actions/workflows/post-java-springboot-maven-postgresql-ci.yml)
+[![post-typescript-nestjs-npm-postgresql CI](https://github.com/hawon6691/Project-Bible/actions/workflows/post-typescript-nestjs-npm-postgresql-ci.yml/badge.svg)](https://github.com/hawon6691/Project-Bible/actions/workflows/post-typescript-nestjs-npm-postgresql-ci.yml)
+[![shop-java-springboot-maven-postgresql CI](https://github.com/hawon6691/Project-Bible/actions/workflows/shop-java-springboot-maven-postgresql-ci.yml/badge.svg)](https://github.com/hawon6691/Project-Bible/actions/workflows/shop-java-springboot-maven-postgresql-ci.yml)
+[![shop-typescript-nestjs-npm-postgresql CI](https://github.com/hawon6691/Project-Bible/actions/workflows/shop-typescript-nestjs-npm-postgresql-ci.yml/badge.svg)](https://github.com/hawon6691/Project-Bible/actions/workflows/shop-typescript-nestjs-npm-postgresql-ci.yml)
+
 ## 개요
 
 - Backend
@@ -140,6 +146,42 @@ pb up web-shop
 ```powershell
 pb up web-post --port 3005
 pb up post-java-springboot-maven-postgresql --port 8011
+```
+
+## 대표 실행 예시
+
+### Backend
+
+```powershell
+pb up post-java-springboot-maven-postgresql --port 8011
+pb up shop-typescript-nestjs-npm-postgresql --port 8021
+pb down post-java-springboot-maven-postgresql
+pb down shop-typescript-nestjs-npm-postgresql
+```
+
+### Frontend
+
+```powershell
+pb up web-post --port 3000
+pb up web-shop --port 3001
+pb down web-post
+pb down web-shop
+```
+
+### Database
+
+```powershell
+pb db up
+pb db reset postgresql post
+pb db reset mysql shop
+pb db down
+```
+
+### 검증
+
+```powershell
+pb test post-java-springboot-maven-postgresql
+pb test shop-typescript-nestjs-npm-postgresql
 ```
 
 ## 검증 기준
