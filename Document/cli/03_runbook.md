@@ -102,6 +102,10 @@ pb db reset postgresql post
 예시:
 
 ```powershell
+pb up web-post --port 3000
+pb down web-post
+pb up web-shop --port 3000
+pb down --port 3000
 pb test web-shop
 pb doctor
 ```
@@ -111,6 +115,29 @@ pb doctor
 - `pb test ...`: 대상 프로젝트의 테스트 스크립트 실행
 - `pb doctor`: Python, Node, npm, Java, Docker 경로 출력
 
+## 포트 충돌 처리 시나리오
+
+특정 포트로 실행:
+
+```powershell
+pb up web-post --port 3000
+```
+
+이미 포트가 열려 있으면 CLI는 점유 중인 CLI 타깃 또는 PID를 출력한다.
+이 경우 아래 중 하나로 먼저 종료한 뒤 다시 실행한다.
+
+```powershell
+pb down web-post
+pb down --port 3000
+pb up web-post --port 3000
+```
+
+주의:
+
+- `pb down <target>`은 CLI가 띄운 프로세스를 타깃명 기준으로 종료한다.
+- `pb down --port N`은 해당 포트를 점유 중인 프로세스를 기준으로 종료한다.
+- CLI가 띄우지 않은 프로세스도 종료할 수 있으므로 포트 번호를 확인하고 사용한다.
+
 ## 흔한 실수
 
 - `projects.yaml`의 `name`과 실제 폴더명을 다르게 적는 경우
@@ -119,6 +146,7 @@ pb doctor
 - 백엔드 이름에서 `springboot`, `nestjs`, `jpa`, `jdbc`, `typeorm`, `knex` 같은 고정 토큰을 임의로 변경하는 경우
 - `pb db reset` 전에 DB 컨테이너를 올리지 않는 경우
 - `pb down` 호출 전에 `pb up` 기록이 없는 경우
+- 이미 열려 있는 포트를 `pb up <target> --port N`으로 다시 지정하는 경우
 
 ## 운영 메모
 

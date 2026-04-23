@@ -1,1 +1,10 @@
-import { useQuery } from "@tanstack/react-query"; import { fetchHealth } from "../../shared/api/client"; import { PageShell } from "../../shared/ui/PageShell"; export function HomePage() { const { data, isLoading } = useQuery({ queryKey: ["health"], queryFn: fetchHealth }); return (<PageShell title="Home" description="web-shop::home"><p>API Base: {import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000"}</p><p>{isLoading ? "Loading health..." : `Status: ${data?.status} / ${data?.service}`}</p></PageShell>); }
+import { HomeSummary } from "../../widgets/home-summary/HomeSummary";
+import { PageShell } from "../../widgets/app-shell/PageShell";
+
+export function HomePage() {
+  return (
+    <PageShell title="Shop Home" description="쇼핑몰 API 상태와 주요 상품을 확인합니다.">
+      <HomeSummary />
+    </PageShell>
+  );
+}

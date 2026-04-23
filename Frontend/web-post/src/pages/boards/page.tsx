@@ -1,1 +1,10 @@
-import { useQuery } from "@tanstack/react-query"; import { fetchBoards, fetchPosts } from "../../shared/api/client"; import { PageShell } from "../../shared/ui/PageShell"; export function BoardsPage() { const boards = useQuery({ queryKey: ["boards"], queryFn: fetchBoards }); const posts = useQuery({ queryKey: ["posts"], queryFn: fetchPosts }); return (<PageShell title="Boards" description="web-post::boards"><h2>Boards</h2><ul>{(boards.data ?? []).map((item) => (<li key={item.id}>{item.name} / {item.status}</li>))}</ul><h2>Posts</h2><ul>{(posts.data ?? []).map((item) => (<li key={item.id}>{item.title} / views {item.viewCount}</li>))}</ul></PageShell>); }
+import { BoardPostsPanel } from "../../widgets/board-posts-panel/BoardPostsPanel";
+import { PageShell } from "../../widgets/app-shell/PageShell";
+
+export function BoardsPage() {
+  return (
+    <PageShell title="Boards" description="게시판 목록, 게시글 목록, 게시글 작성을 확인합니다.">
+      <BoardPostsPanel />
+    </PageShell>
+  );
+}

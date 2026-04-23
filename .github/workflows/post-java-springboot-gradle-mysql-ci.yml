@@ -1,0 +1,39 @@
+name: post-java-springboot-gradle-mysql CI
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/post-java-springboot-gradle-mysql-ci.yml"
+      - "Backend/post/post-java-springboot-gradle-mysql/**"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/post-java-springboot-gradle-mysql-ci.yml"
+      - "Backend/post/post-java-springboot-gradle-mysql/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: Backend/post/post-java-springboot-gradle-mysql
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: gradle
+      - run: chmod +x gradlew
+      - run: ./gradlew test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: post-java-springboot-gradle-mysql-test-results
+          path: Backend/post/post-java-springboot-gradle-mysql/build/test-results/test/
+          if-no-files-found: ignore

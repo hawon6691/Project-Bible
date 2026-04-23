@@ -1,1 +1,10 @@
-import { useQuery } from "@tanstack/react-query"; import { fetchProductDetail } from "../../shared/api/client"; import { PageShell } from "../../shared/ui/PageShell"; export function ProductDetailPage() { const query = useQuery({ queryKey: ["product-detail", 1], queryFn: () => fetchProductDetail(1) }); return (<PageShell title="Product Detail" description="web-shop::product-detail"><pre>{JSON.stringify(query.data ?? { message: "Loading..." }, null, 2)}</pre></PageShell>); }
+import { ProductDetailPanel } from "../../widgets/product-detail-panel/ProductDetailPanel";
+import { PageShell } from "../../widgets/app-shell/PageShell";
+
+export function ProductDetailPage() {
+  return (
+    <PageShell title="Product Detail" description="상품 상세, 옵션/이미지, 리뷰를 확인합니다.">
+      <ProductDetailPanel />
+    </PageShell>
+  );
+}

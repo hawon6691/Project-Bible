@@ -9,7 +9,7 @@ from pathlib import Path
 
 from pbcli.models import ProjectTarget
 from pbcli.registry import flat_targets, load_targets
-from pbcli.runtime import forget_process, load_runtime_state, remember_process
+from pbcli.runtime import forget_process, load_runtime_state, remember_process, save_runtime_state
 
 
 REPO_ROOT = Path(__file__).resolve().parents[4]
@@ -29,6 +29,24 @@ def _pid_is_alive(pid: int) -> bool:
         text=True,
     )
     return result.returncode == 0 and bool(result.stdout.strip())
+
+
+def _find_listening_pid(port: int) -> int | None:
+    command = (
+        "Get-NetTCPConnection "
+        f"-LocalPort {port} "
+        "-State Listen "
+        "-ErrorAction SilentlyContinue "
+        "| Select-Object -First 1 -ExpandProperty OwningProcess"
+    )
+    result = subprocess.run(
+        ["powershell", "-NoProfile", "-Command", command],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    value = result.stdout.strip()
+    return int(value) if value.isdigit() else None
 
 
 def _active_runtime_records() -> dict[str, object]:
@@ -67,8 +85,22 @@ def _base_port_for(target: ProjectTarget) -> int:
 
 def _resolve_port(target: ProjectTarget, requested_port: int | None) -> int:
     if requested_port is not None:
+        active = _active_runtime_records()
+        for record in active.values():
+            if record.assigned_port == requested_port:
+                raise SystemExit(
+                    f"Port {requested_port} is already used by CLI target '{record.name}' "
+                    f"(PID {record.pid}). Stop it first with: pb down {record.name} "
+                    f"or pb down --port {requested_port}"
+                )
         if not _is_port_available(requested_port):
-            raise SystemExit(f"Port {requested_port} is already in use.")
+            pid = _find_listening_pid(requested_port)
+            pid_hint = f" by PID {pid}" if pid else ""
+            raise SystemExit(
+                f"Port {requested_port} is already in use{pid_hint}. "
+                f"Stop that process first with: pb down --port {requested_port} "
+                "or choose another port with --port."
+            )
         return requested_port
 
     active = _active_runtime_records().values()
@@ -160,6 +192,42 @@ def cmd_list(_args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_search(args: argparse.Namespace) -> int:
+    keyword = args.keyword.lower()
+    commands = [
+        ("list", "List registered targets", "pb list"),
+        ("up", "Start a target in a new PowerShell window", "pb up web-post --port 3000"),
+        ("down", "Stop a tracked target or process by port", "pb down web-post / pb down --port 3000"),
+        ("test", "Run tests for a target", "pb test web-shop"),
+        ("db up", "Start database services", "pb db up"),
+        ("db down", "Stop database services", "pb db down"),
+        ("db reset", "Reset a database domain", "pb db reset postgresql post"),
+        ("doctor", "Check local toolchain", "pb doctor"),
+        ("gui", "Open the local desktop GUI", "pb gui"),
+    ]
+    targets = flat_targets()
+    rows = [
+        ("command", name, description, example)
+        for name, description, example in commands
+        if keyword in name.lower() or keyword in description.lower() or keyword in example.lower()
+    ]
+    rows.extend(
+        ("target", target.name, f"{target.kind} / {target.domain} / {target.framework}", f"pb up {target.name}")
+        for target in targets.values()
+        if keyword in target.name.lower()
+        or keyword in target.kind.lower()
+        or keyword in target.domain.lower()
+        or keyword in target.framework.lower()
+    )
+    if not rows:
+        print(f"No commands or targets matched: {args.keyword}")
+        return 1
+    for row_type, name, description, example in rows:
+        print(f"[{row_type}] {name}: {description}")
+        print(f"  example: {example}")
+    return 0
+
+
 def cmd_up(args: argparse.Namespace) -> int:
     target = _require_target(args.target)
     if target.kind == "database":
@@ -176,9 +244,43 @@ def cmd_up(args: argparse.Namespace) -> int:
 
 
 def cmd_down(args: argparse.Namespace) -> int:
-    record = forget_process(args.target)
+    target = getattr(args, "target", None)
+    port = getattr(args, "port", None)
+    if not target and port is None:
+        raise SystemExit("Provide a target name or --port. Example: pb down web-post or pb down --port 3000")
+    if target and port is not None:
+        raise SystemExit("Use either target name or --port, not both.")
+
+    if port is not None:
+        state = load_runtime_state()
+        for name, record in list(state.items()):
+            if record.assigned_port == port:
+                state.pop(name)
+                save_runtime_state(state)
+                subprocess.run(
+                    ["taskkill", "/PID", str(record.pid), "/T", "/F"],
+                    check=False,
+                    capture_output=True,
+                    text=True,
+                )
+                print(f"Stopped {record.name} (PID {record.pid}, port {record.assigned_port})")
+                return 0
+
+        pid = _find_listening_pid(port)
+        if pid is None:
+            raise SystemExit(f"No CLI target or listening process found on port {port}.")
+        subprocess.run(
+            ["taskkill", "/PID", str(pid), "/T", "/F"],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        print(f"Stopped untracked process using port {port} (PID {pid})")
+        return 0
+
+    record = forget_process(target)
     if record is None:
-        raise SystemExit(f"Target not running in CLI state: {args.target}")
+        raise SystemExit(f"Target not running in CLI state: {target}")
     subprocess.run(
         ["taskkill", "/PID", str(record.pid), "/T", "/F"],
         check=False,
@@ -220,6 +322,26 @@ def _apply_postgresql_sql(domain: str) -> int:
             "-d",
             "postgres",
             "-c",
+            (
+                "SELECT pg_terminate_backend(pid) "
+                "FROM pg_stat_activity "
+                f"WHERE datname = '{db_name}' AND pid <> pg_backend_pid();"
+            ),
+        ],
+        check=True,
+    )
+    subprocess.run(
+        [
+            "docker",
+            "exec",
+            "-i",
+            "projectbible-postgres",
+            "psql",
+            "-U",
+            "project_bible",
+            "-d",
+            "postgres",
+            "-c",
             f"DROP DATABASE IF EXISTS {db_name};",
         ],
         check=True,
@@ -243,17 +365,19 @@ def _apply_postgresql_sql(domain: str) -> int:
     for file_path in (schema_file, seed_file):
         sql = file_path.read_text(encoding="utf-8")
         subprocess.run(
-            [
-                "docker",
-                "exec",
-                "-i",
-                "projectbible-postgres",
-                "psql",
-                "-U",
-                "project_bible",
-                "-d",
-                db_name,
-            ],
+        [
+            "docker",
+            "exec",
+            "-i",
+            "projectbible-postgres",
+            "psql",
+            "-U",
+            "project_bible",
+            "-d",
+            db_name,
+            "-v",
+            "ON_ERROR_STOP=1",
+        ],
             input=sql,
             text=True,
             check=True,
@@ -288,12 +412,13 @@ def _apply_mysql_sql(domain: str) -> int:
                 "docker",
                 "exec",
                 "-i",
-                "projectbible-mysql",
-                "mysql",
-                "-uroot",
-                "-pproject_bible",
-                db_name,
-            ],
+            "projectbible-mysql",
+            "mysql",
+            "-uroot",
+            "-pproject_bible",
+            "--default-character-set=utf8mb4",
+            db_name,
+        ],
             input=sql,
             text=True,
             check=True,

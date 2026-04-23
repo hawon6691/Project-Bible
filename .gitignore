@@ -4,6 +4,8 @@
 **/build/
 **/target/
 **/coverage/
+**/playwright-report/
+**/test-results/
 **/tsconfig.tsbuildinfo
 Tools/cli/.runtime/
 *.log

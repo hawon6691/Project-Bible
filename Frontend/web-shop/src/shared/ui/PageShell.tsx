@@ -1,3 +1,0 @@
-import { PropsWithChildren } from "react";
-interface Props extends PropsWithChildren { title: string; description: string; }
-export function PageShell({ title, description, children }: Props) { return (<main style={{ maxWidth: 1080, margin: "0 auto", padding: "48px 24px" }}><header style={{ marginBottom: 24 }}><div style={{ fontSize: 12, textTransform: "uppercase", letterSpacing: 1.2, color: "#7a5d3a" }}>Project-Bible</div><h1 style={{ margin: "8px 0 0", fontSize: 36 }}>{title}</h1><p style={{ color: "#5d5144" }}>{description}</p></header><section style={{ padding: 24, borderRadius: 20, background: "#fff", border: "1px solid #eadcc7" }}>{children ?? <p>Baseline page is ready.</p>}</section></main>); }
