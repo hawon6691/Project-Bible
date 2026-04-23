@@ -8,12 +8,15 @@ Shared Python CLI for Project-Bible scaffolding, local orchestration, and checks
 - `pb up <target>`
 - `pb up <target> --port <number>`
 - `pb down <target>`
+- `pb down --port <number>`
 - `pb test <target>`
 - `pb db up`
 - `pb db down`
 - `pb db reset <engine> <domain>`
 - `pb doctor`
 - `pb gui`
+- `pb search <keyword>`
+- `pb --help`, `pb <command> --help`, `pb /?`, `pb <command> /?`
 
 ## Runtime
 
@@ -21,3 +24,6 @@ Shared Python CLI for Project-Bible scaffolding, local orchestration, and checks
 - Target registry: `Tools/cli/src/pbcli/config/projects.yaml`
 - GUI: Tkinter desktop panel backed by the same CLI service layer
 - Default port policy: backend starts at `8000`, frontend starts at `3000`, then auto-increments by active runtime state
+- If a requested port is already open, the CLI prints the occupying target or PID and asks you to stop it first with `pb down <target>` or `pb down --port <number>`.
+- Command help supports both Unix-style `--help` and Windows-style `/?`.
+- `pb search <keyword>` searches command names, descriptions, examples, and registered target names.
