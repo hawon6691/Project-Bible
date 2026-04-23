@@ -4,10 +4,6 @@ server:
 spring:
   application:
     name: ${APP_NAME:post-java-springboot-maven-mysql}
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration
-      - org.springframework.boot.hibernate.autoconfigure.HibernateJpaAutoConfiguration
   datasource:
     url: ${DB_URL:jdbc:mysql://localhost:3306/pb_post}
     username: ${DB_USER:project_bible}
