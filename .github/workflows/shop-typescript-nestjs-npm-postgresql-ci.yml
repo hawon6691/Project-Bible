@@ -1,0 +1,70 @@
+name: shop-typescript-nestjs-npm-postgresql CI
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/shop-typescript-nestjs-npm-postgresql-ci.yml"
+      - "Backend/shop/shop-typescript-nestjs-npm-postgresql/**"
+      - "Database/postgresql/shop/**"
+      - "Tools/ci/load_postgresql.sh"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/shop-typescript-nestjs-npm-postgresql-ci.yml"
+      - "Backend/shop/shop-typescript-nestjs-npm-postgresql/**"
+      - "Database/postgresql/shop/**"
+      - "Tools/ci/load_postgresql.sh"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: Backend/shop/shop-typescript-nestjs-npm-postgresql
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: project_bible
+          POSTGRES_PASSWORD: project_bible
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U project_bible -d postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: project_bible
+      POSTGRES_PASSWORD: project_bible
+      DB_HOST: localhost
+      DB_PORT: 5432
+      DB_NAME: pb_shop
+      DB_USER: project_bible
+      DB_PASSWORD: project_bible
+      JWT_SECRET: ci-access-secret
+      JWT_REFRESH_SECRET: ci-refresh-secret
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y postgresql-client
+        working-directory: .
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: Backend/shop/shop-typescript-nestjs-npm-postgresql/package-lock.json
+      - run: chmod +x Tools/ci/load_postgresql.sh
+        working-directory: .
+      - run: bash Tools/ci/load_postgresql.sh shop pb_shop
+        working-directory: .
+      - run: npm ci
+      - run: npm run build
+      - run: npm run test:e2e

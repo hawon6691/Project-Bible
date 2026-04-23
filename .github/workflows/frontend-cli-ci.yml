@@ -1,0 +1,60 @@
+name: frontend-cli CI
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/frontend-cli-ci.yml"
+      - "Frontend/**"
+      - "Tools/cli/**"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/frontend-cli-ci.yml"
+      - "Frontend/**"
+      - "Tools/cli/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [web-post, web-shop]
+    defaults:
+      run:
+        working-directory: Frontend/${{ matrix.app }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: Frontend/${{ matrix.app }}/package-lock.json
+      - run: npm ci
+      - run: npm run build
+      - run: npm run test
+      - run: npx playwright install chromium
+      - run: npm run test:smoke
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ matrix.app }}-playwright-report
+          path: Frontend/${{ matrix.app }}/playwright-report/
+          if-no-files-found: ignore
+
+  cli:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -e Tools/cli
+      - run: python -m compileall Tools/cli/src/pbcli
+      - run: pb list
+      - run: pb /?
+      - run: pb search web

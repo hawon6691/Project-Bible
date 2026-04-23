@@ -1,0 +1,77 @@
+name: post-java-springboot-gradle-mysql CI
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/post-java-springboot-gradle-mysql-ci.yml"
+      - "Backend/post/post-java-springboot-gradle-mysql/**"
+      - "Database/mysql/post/**"
+      - "Tools/ci/load_mysql.sh"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/post-java-springboot-gradle-mysql-ci.yml"
+      - "Backend/post/post-java-springboot-gradle-mysql/**"
+      - "Database/mysql/post/**"
+      - "Tools/ci/load_mysql.sh"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: Backend/post/post-java-springboot-gradle-mysql
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: project_bible
+          MYSQL_DATABASE: mysql
+          MYSQL_USER: project_bible
+          MYSQL_PASSWORD: project_bible
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -pproject_bible"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=20
+    env:
+      MYSQL_HOST: 127.0.0.1
+      MYSQL_PORT: 3306
+      MYSQL_ROOT_PASSWORD: project_bible
+      MYSQL_USER: project_bible
+      MYSQL_PASSWORD: project_bible
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_NAME: pb_post
+      DB_USER: project_bible
+      DB_PASSWORD: project_bible
+      JWT_SECRET: ci-access-secret
+      JWT_REFRESH_SECRET: ci-refresh-secret
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y default-mysql-client
+        working-directory: .
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: gradle
+      - run: chmod +x Tools/ci/load_mysql.sh
+        working-directory: .
+      - run: bash Tools/ci/load_mysql.sh post pb_post
+        working-directory: .
+      - run: chmod +x gradlew
+      - run: ./gradlew test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: post-java-springboot-gradle-mysql-test-results
+          path: Backend/post/post-java-springboot-gradle-mysql/build/test-results/test/
+          if-no-files-found: ignore
