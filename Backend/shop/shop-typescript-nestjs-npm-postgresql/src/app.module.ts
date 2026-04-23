@@ -5,7 +5,7 @@ import { APP_GUARD } from "@nestjs/core";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AddressesModule } from "./addresses/addresses.module";
 import { AdminModule } from "./admin/admin.module";
-import { AppController } from "./app.controller";
+import { HealthController } from "./common/health.controller";
 import { AuthModule } from "./auth/auth.module";
 import { CartModule } from "./cart/cart.module";
 import { CategoriesModule } from "./categories/categories.module";
@@ -45,7 +45,7 @@ import { UsersModule } from "./users/users.module";
     PaymentsModule,
     ReviewsModule,
   ],
-  controllers: [AppController],
+  controllers: [HealthController],
   providers: [{ provide: APP_GUARD, useClass: JwtAuthGuard }],
 })
 export class AppModule {}
