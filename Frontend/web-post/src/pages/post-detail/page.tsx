@@ -1,1 +1,10 @@
-import { useQuery } from "@tanstack/react-query"; import { fetchPostDetail } from "../../shared/api/client"; import { PageShell } from "../../shared/ui/PageShell"; export function PostDetailPage() { const query = useQuery({ queryKey: ["post-detail", 1], queryFn: () => fetchPostDetail(1) }); return (<PageShell title="Post Detail" description="web-post::post-detail"><pre>{JSON.stringify(query.data ?? { message: "Loading..." }, null, 2)}</pre></PageShell>); }
+import { PostDetailPanel } from "../../widgets/post-detail-panel/PostDetailPanel";
+import { PageShell } from "../../widgets/app-shell/PageShell";
+
+export function PostDetailPage() {
+  return (
+    <PageShell title="Post Detail" description="게시글 상세, 댓글, 좋아요를 확인합니다.">
+      <PostDetailPanel />
+    </PageShell>
+  );
+}

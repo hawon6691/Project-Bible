@@ -1,1 +1,10 @@
-import { useQuery } from "@tanstack/react-query"; import { fetchCategories, fetchProducts } from "../../shared/api/client"; import { PageShell } from "../../shared/ui/PageShell"; export function ProductsPage() { const categories = useQuery({ queryKey: ["categories"], queryFn: fetchCategories }); const products = useQuery({ queryKey: ["products"], queryFn: fetchProducts }); return (<PageShell title="Products" description="web-shop::products"><h2>Categories</h2><ul>{(categories.data ?? []).map((item) => (<li key={item.id}>{item.name} / {item.status}</li>))}</ul><h2>Products</h2><ul>{(products.data ?? []).map((item) => (<li key={item.id}>{item.name} / {item.price}</li>))}</ul></PageShell>); }
+import { ProductCatalog } from "../../widgets/product-catalog/ProductCatalog";
+import { PageShell } from "../../widgets/app-shell/PageShell";
+
+export function ProductsPage() {
+  return (
+    <PageShell title="Products" description="카테고리와 상품 목록을 확인하고 장바구니에 담습니다.">
+      <ProductCatalog />
+    </PageShell>
+  );
+}
