@@ -16,9 +16,6 @@
 - 빌드 도구:
   - Java: `Maven`, `Gradle`
   - TypeScript: `npm`
-- 데이터 접근:
-  - Java: `jdbc`, `jpa`
-  - TypeScript: `knex`, `typeorm`
 - DB 엔진: `postgresql`, `mysql`
 
 프로젝트 수 계산:
@@ -27,13 +24,14 @@
 | --- | --- | --- |
 | Java | `2 build tools x 2 db` | `4개` |
 | TypeScript | `1 build tool x 2 db` | `2개` |
-| 합계 | `8 + 4` | `12개` |
+| 합계 | `4 + 2` | `6개` |
 
 ## 폴더명 규칙
 
 실제 저장소 폴더명과 CLI 인자는 아래 규칙으로 통일한다.
 
-`<domain>-<language>-<framework>-<build>-<db>`
+- Java: `<domain>-java-springboot-<build>-<db>`
+- TypeScript: `<domain>-typescript-nestjs-npm-<db>`
 
 작성 규칙:
 
@@ -41,18 +39,15 @@
 - 구분자는 `-`만 사용한다.
 - 도메인은 맨 앞에 둔다.
 - 프레임워크 표기는 `springboot`, `nestjs`를 사용한다.
-- Java Raw SQL은 `jdbc`를 사용한다.
-- Java ORM은 `jpa`를 사용한다.
-- TypeScript Raw SQL은 `knex`를 사용한다.
-- TypeScript ORM은 `typeorm`을 사용한다.
+- TypeScript 프로젝트는 식별자에 `npm`을 포함한다.
 - DB 엔진은 `postgresql`, `mysql`을 사용한다.
 
 예시:
 
 - `shop-java-springboot-maven-postgresql`
 - `shop-java-springboot-gradle-mysql`
-- `shop-typescript-nestjs-typeorm-postgresql`
-- `shop-typescript-nestjs-knex-mysql`
+- `shop-typescript-nestjs-npm-postgresql`
+- `shop-typescript-nestjs-npm-mysql`
 
 ## 백엔드 폴더 배치 규칙
 
@@ -113,9 +108,9 @@ CLI 식별 기준:
 
 ## 결론
 
-이 문서 기준으로 `shop` 서비스는 총 `12개`의 백엔드 구현 프로젝트를 가진다.
+이 문서 기준으로 `shop` 서비스는 총 `6개`의 백엔드 구현 프로젝트를 가진다.
 
-- Java: `8개`
-- TypeScript: `4개`
+- Java: `4개`
+- TypeScript: `2개`
 
 공용 Python CLI는 `Tools/cli`에 `1개`만 두며, 실제 실행 대상은 위 폴더명 규칙을 따른 프로젝트명으로 선택한다.
