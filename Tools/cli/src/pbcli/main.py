@@ -11,6 +11,7 @@ from pbcli.services import (
     cmd_doctor,
     cmd_down,
     cmd_list,
+    cmd_search,
     cmd_test,
     cmd_up,
 )
@@ -28,8 +29,9 @@ def build_parser() -> argparse.ArgumentParser:
     up_parser.add_argument("--port", type=int, help="Override the assigned port")
     up_parser.set_defaults(func=cmd_up)
 
-    down_parser = subparsers.add_parser("down", help="Stop a tracked target")
-    down_parser.add_argument("target")
+    down_parser = subparsers.add_parser("down", help="Stop a tracked target or a process by port")
+    down_parser.add_argument("target", nargs="?")
+    down_parser.add_argument("--port", type=int, help="Stop the process using this port")
     down_parser.set_defaults(func=cmd_down)
 
     test_parser = subparsers.add_parser("test", help="Run tests for a target")
@@ -57,10 +59,16 @@ def build_parser() -> argparse.ArgumentParser:
     gui_parser = subparsers.add_parser("gui", help="Open the local desktop GUI")
     gui_parser.set_defaults(func=lambda _args: run_gui())
 
+    search_parser = subparsers.add_parser("search", help="Search commands and registered targets")
+    search_parser.add_argument("keyword")
+    search_parser.set_defaults(func=cmd_search)
+
     return parser
 
 
 def main() -> int:
+    if "/?" in sys.argv[1:]:
+        sys.argv = [sys.argv[0], *("-h" if arg == "/?" else arg for arg in sys.argv[1:])]
     parser = build_parser()
     args = parser.parse_args()
     return args.func(args)

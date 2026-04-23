@@ -23,30 +23,6 @@ backend:
   start_command: .\mvnw.cmd spring-boot:run
   test_command: .\mvnw.cmd test
   env_file: .env.example
-- name: post-java-springboot-maven-jdbc-postgresql
-  path: Backend/post/post-java-springboot-maven-jdbc-postgresql
-  kind: backend
-  domain: post
-  runtime: java
-  framework: springboot
-  build: maven
-  db: postgresql
-  port: 8000
-  start_command: .\mvnw.cmd spring-boot:run
-  test_command: .\mvnw.cmd test
-  env_file: .env.example
-- name: post-java-springboot-maven-jdbc-mysql
-  path: Backend/post/post-java-springboot-maven-jdbc-mysql
-  kind: backend
-  domain: post
-  runtime: java
-  framework: springboot
-  build: maven
-  db: mysql
-  port: 8000
-  start_command: .\mvnw.cmd spring-boot:run
-  test_command: .\mvnw.cmd test
-  env_file: .env.example
 - name: post-java-springboot-gradle-postgresql
   path: Backend/post/post-java-springboot-gradle-postgresql
   kind: backend
@@ -71,30 +47,6 @@ backend:
   start_command: .\gradlew.bat bootRun
   test_command: .\gradlew.bat test
   env_file: .env.example
-- name: post-java-springboot-gradle-jdbc-postgresql
-  path: Backend/post/post-java-springboot-gradle-jdbc-postgresql
-  kind: backend
-  domain: post
-  runtime: java
-  framework: springboot
-  build: gradle
-  db: postgresql
-  port: 8000
-  start_command: .\gradlew.bat bootRun
-  test_command: .\gradlew.bat test
-  env_file: .env.example
-- name: post-java-springboot-gradle-jdbc-mysql
-  path: Backend/post/post-java-springboot-gradle-jdbc-mysql
-  kind: backend
-  domain: post
-  runtime: java
-  framework: springboot
-  build: gradle
-  db: mysql
-  port: 8000
-  start_command: .\gradlew.bat bootRun
-  test_command: .\gradlew.bat test
-  env_file: .env.example
 - name: post-typescript-nestjs-npm-postgresql
   path: Backend/post/post-typescript-nestjs-npm-postgresql
   kind: backend
@@ -104,8 +56,8 @@ backend:
   build: npm
   db: postgresql
   port: 8000
-  start_command: npm install; npm run start:dev
-  test_command: npm install; npm run test
+  start_command: npm.cmd install; npm.cmd run start:dev
+  test_command: npm.cmd install; npm.cmd run test:e2e
   env_file: .env.example
 - name: post-typescript-nestjs-npm-mysql
   path: Backend/post/post-typescript-nestjs-npm-mysql
@@ -116,32 +68,8 @@ backend:
   build: npm
   db: mysql
   port: 8000
-  start_command: npm install; npm run start:dev
-  test_command: npm install; npm run test
-  env_file: .env.example
-- name: post-typescript-nestjs-npm-knex-postgresql
-  path: Backend/post/post-typescript-nestjs-npm-knex-postgresql
-  kind: backend
-  domain: post
-  runtime: node
-  framework: nestjs
-  build: npm
-  db: postgresql
-  port: 8000
-  start_command: npm install; npm run start:dev
-  test_command: npm install; npm run test
-  env_file: .env.example
-- name: post-typescript-nestjs-npm-knex-mysql
-  path: Backend/post/post-typescript-nestjs-npm-knex-mysql
-  kind: backend
-  domain: post
-  runtime: node
-  framework: nestjs
-  build: npm
-  db: mysql
-  port: 8000
-  start_command: npm install; npm run start:dev
-  test_command: npm install; npm run test
+  start_command: npm.cmd install; npm.cmd run start:dev
+  test_command: npm.cmd install; npm.cmd run test:e2e
   env_file: .env.example
 - name: shop-java-springboot-maven-postgresql
   path: Backend/shop/shop-java-springboot-maven-postgresql
@@ -157,30 +85,6 @@ backend:
   env_file: .env.example
 - name: shop-java-springboot-maven-mysql
   path: Backend/shop/shop-java-springboot-maven-mysql
-  kind: backend
-  domain: shop
-  runtime: java
-  framework: springboot
-  build: maven
-  db: mysql
-  port: 8000
-  start_command: .\mvnw.cmd spring-boot:run
-  test_command: .\mvnw.cmd test
-  env_file: .env.example
-- name: shop-java-springboot-maven-jdbc-postgresql
-  path: Backend/shop/shop-java-springboot-maven-jdbc-postgresql
-  kind: backend
-  domain: shop
-  runtime: java
-  framework: springboot
-  build: maven
-  db: postgresql
-  port: 8000
-  start_command: .\mvnw.cmd spring-boot:run
-  test_command: .\mvnw.cmd test
-  env_file: .env.example
-- name: shop-java-springboot-maven-jdbc-mysql
-  path: Backend/shop/shop-java-springboot-maven-jdbc-mysql
   kind: backend
   domain: shop
   runtime: java
@@ -215,30 +119,6 @@ backend:
   start_command: .\gradlew.bat bootRun
   test_command: .\gradlew.bat test
   env_file: .env.example
-- name: shop-java-springboot-gradle-jdbc-postgresql
-  path: Backend/shop/shop-java-springboot-gradle-jdbc-postgresql
-  kind: backend
-  domain: shop
-  runtime: java
-  framework: springboot
-  build: gradle
-  db: postgresql
-  port: 8000
-  start_command: .\gradlew.bat bootRun
-  test_command: .\gradlew.bat test
-  env_file: .env.example
-- name: shop-java-springboot-gradle-jdbc-mysql
-  path: Backend/shop/shop-java-springboot-gradle-jdbc-mysql
-  kind: backend
-  domain: shop
-  runtime: java
-  framework: springboot
-  build: gradle
-  db: mysql
-  port: 8000
-  start_command: .\gradlew.bat bootRun
-  test_command: .\gradlew.bat test
-  env_file: .env.example
 - name: shop-typescript-nestjs-npm-postgresql
   path: Backend/shop/shop-typescript-nestjs-npm-postgresql
   kind: backend
@@ -248,8 +128,8 @@ backend:
   build: npm
   db: postgresql
   port: 8000
-  start_command: npm install; npm run start:dev
-  test_command: npm install; npm run test
+  start_command: npm.cmd install; npm.cmd run start:dev
+  test_command: npm.cmd install; npm.cmd run test:e2e
   env_file: .env.example
 - name: shop-typescript-nestjs-npm-mysql
   path: Backend/shop/shop-typescript-nestjs-npm-mysql
@@ -260,32 +140,8 @@ backend:
   build: npm
   db: mysql
   port: 8000
-  start_command: npm install; npm run start:dev
-  test_command: npm install; npm run test
-  env_file: .env.example
-- name: shop-typescript-nestjs-npm-knex-postgresql
-  path: Backend/shop/shop-typescript-nestjs-npm-knex-postgresql
-  kind: backend
-  domain: shop
-  runtime: node
-  framework: nestjs
-  build: npm
-  db: postgresql
-  port: 8000
-  start_command: npm install; npm run start:dev
-  test_command: npm install; npm run test
-  env_file: .env.example
-- name: shop-typescript-nestjs-npm-knex-mysql
-  path: Backend/shop/shop-typescript-nestjs-npm-knex-mysql
-  kind: backend
-  domain: shop
-  runtime: node
-  framework: nestjs
-  build: npm
-  db: mysql
-  port: 8000
-  start_command: npm install; npm run start:dev
-  test_command: npm install; npm run test
+  start_command: npm.cmd install; npm.cmd run start:dev
+  test_command: npm.cmd install; npm.cmd run test:e2e
   env_file: .env.example
 frontend:
 - name: web-post
@@ -297,8 +153,8 @@ frontend:
   build: vite
   db: none
   port: 3000
-  start_command: npm install; npm run dev -- --host 0.0.0.0 --port $env:VITE_APP_PORT
-  test_command: npm install; npm run test
+  start_command: npm.cmd install; npm.cmd run dev -- --host 0.0.0.0 --port $env:VITE_APP_PORT
+  test_command: npm.cmd install; npm.cmd run test
   env_file: .env.example
 - name: web-shop
   path: Frontend/web-shop
@@ -309,8 +165,8 @@ frontend:
   build: vite
   db: none
   port: 3000
-  start_command: npm install; npm run dev -- --host 0.0.0.0 --port $env:VITE_APP_PORT
-  test_command: npm install; npm run test
+  start_command: npm.cmd install; npm.cmd run dev -- --host 0.0.0.0 --port $env:VITE_APP_PORT
+  test_command: npm.cmd install; npm.cmd run test
   env_file: .env.example
 database:
 - name: db-postgresql
