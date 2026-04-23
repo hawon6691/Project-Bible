@@ -12,10 +12,10 @@ INSERT INTO categories (id, name, display_order, status) VALUES
   (3, 'monitor', 3, 'ACTIVE');
 
 INSERT INTO products (id, category_id, name, description, price, stock, status) VALUES
-  (1, 1, 'PB Mechanical Keyboard', '기계식 키보드 샘플 상품', 129000.00, 50, 'ACTIVE'),
-  (2, 2, 'PB Wireless Mouse', '무선 마우스 샘플 상품', 59000.00, 80, 'ACTIVE'),
-  (3, 3, 'PB 27 Monitor', '27인치 모니터 샘플 상품', 329000.00, 20, 'ACTIVE'),
-  (4, 1, 'PB Compact Keyboard', '컴팩트 키보드 샘플 상품', 99000.00, 35, 'HIDDEN');
+  (1, 1, 'PB Mechanical Keyboard', 'Mechanical keyboard sample product', 129000.00, 50, 'ACTIVE'),
+  (2, 2, 'PB Wireless Mouse', 'Wireless mouse sample product', 59000.00, 80, 'ACTIVE'),
+  (3, 3, 'PB 27 Monitor', '27 inch monitor sample product', 329000.00, 20, 'ACTIVE'),
+  (4, 1, 'PB Compact Keyboard', 'Compact keyboard sample product', 99000.00, 35, 'HIDDEN');
 
 INSERT INTO product_options (id, product_id, name, value, additional_price, stock) VALUES
   (1, 1, 'switch', 'red', 0.00, 20),
@@ -56,7 +56,7 @@ INSERT INTO payments (id, order_id, payment_method, payment_status, paid_amount,
   (2, 2, 'mock-card', 'PAID', 329000.00, CURRENT_TIMESTAMP);
 
 INSERT INTO reviews (id, order_item_id, product_id, user_id, rating, content, status) VALUES
-  (1, 2, 3, 2, 5, '모니터 품질이 좋아요.', 'ACTIVE');
+  (1, 2, 3, 2, 5, 'Monitor quality is good.', 'ACTIVE');
 
 SELECT setval(pg_get_serial_sequence('admins', 'id'), COALESCE((SELECT MAX(id) FROM admins), 1), true);
 SELECT setval(pg_get_serial_sequence('users', 'id'), COALESCE((SELECT MAX(id) FROM users), 1), true);

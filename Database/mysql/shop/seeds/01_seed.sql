@@ -1,10 +1,10 @@
 INSERT INTO admins (id, email, password_hash, name, status) VALUES
-  (1, 'admin-shop-1@example.com', 'hashed-shop-admin', 'Shop Admin', 'ACTIVE');
+  (1, 'admin-shop-1@example.com', '$2a$10$14w0lOj3Jm7WF2ZXQ6qvGuYqHaJu7.R3CB/ZOwznKOS77jUSSOvca', 'Shop Admin', 'ACTIVE');
 
 INSERT INTO users (id, email, password_hash, name, phone, status) VALUES
-  (1, 'shop-user-1@example.com', 'hashed-shop-user-1', 'Alice Kim', '010-1111-1111', 'ACTIVE'),
-  (2, 'shop-user-2@example.com', 'hashed-shop-user-2', 'Bob Lee', '010-2222-2222', 'ACTIVE'),
-  (3, 'shop-user-3@example.com', 'hashed-shop-user-3', 'Chris Park', '010-3333-3333', 'ACTIVE');
+  (1, 'shop-user-1@example.com', '$2a$10$oxn/00RSwIT5Opg4SLhpG.p9huJkLMthMGsre/vlkx5GpOT.hy/oe', 'Alice Kim', '010-1111-1111', 'ACTIVE'),
+  (2, 'shop-user-2@example.com', '$2a$10$oxn/00RSwIT5Opg4SLhpG.p9huJkLMthMGsre/vlkx5GpOT.hy/oe', 'Bob Lee', '010-2222-2222', 'ACTIVE'),
+  (3, 'shop-user-3@example.com', '$2a$10$oxn/00RSwIT5Opg4SLhpG.p9huJkLMthMGsre/vlkx5GpOT.hy/oe', 'Chris Park', '010-3333-3333', 'ACTIVE');
 
 INSERT INTO categories (id, name, display_order, status) VALUES
   (1, 'keyboard', 1, 'ACTIVE'),
@@ -12,10 +12,10 @@ INSERT INTO categories (id, name, display_order, status) VALUES
   (3, 'monitor', 3, 'ACTIVE');
 
 INSERT INTO products (id, category_id, name, description, price, stock, status) VALUES
-  (1, 1, 'PB Mechanical Keyboard', '기계식 키보드 샘플 상품', 129000.00, 50, 'ACTIVE'),
-  (2, 2, 'PB Wireless Mouse', '무선 마우스 샘플 상품', 59000.00, 80, 'ACTIVE'),
-  (3, 3, 'PB 27 Monitor', '27인치 모니터 샘플 상품', 329000.00, 20, 'ACTIVE'),
-  (4, 1, 'PB Compact Keyboard', '컴팩트 키보드 샘플 상품', 99000.00, 35, 'HIDDEN');
+  (1, 1, 'PB Mechanical Keyboard', 'Mechanical keyboard sample product', 129000.00, 50, 'ACTIVE'),
+  (2, 2, 'PB Wireless Mouse', 'Wireless mouse sample product', 59000.00, 80, 'ACTIVE'),
+  (3, 3, 'PB 27 Monitor', '27 inch monitor sample product', 329000.00, 20, 'ACTIVE'),
+  (4, 1, 'PB Compact Keyboard', 'Compact keyboard sample product', 99000.00, 35, 'HIDDEN');
 
 INSERT INTO product_options (id, product_id, name, value, additional_price, stock) VALUES
   (1, 1, 'switch', 'red', 0.00, 20),
@@ -56,4 +56,4 @@ INSERT INTO payments (id, order_id, payment_method, payment_status, paid_amount,
   (2, 2, 'mock-card', 'PAID', 329000.00, CURRENT_TIMESTAMP);
 
 INSERT INTO reviews (id, order_item_id, product_id, user_id, rating, content, status) VALUES
-  (1, 2, 3, 2, 5, '모니터 품질이 좋아요.', 'ACTIVE');
+  (1, 2, 3, 2, 5, 'Monitor quality is good.', 'ACTIVE');
