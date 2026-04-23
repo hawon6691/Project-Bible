@@ -1,9 +1,45 @@
 import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
-import { AppController } from "./app.controller";
-import { AuthModule } from "./auth/auth.module";
-import { UsersModule } from "./users/users.module";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+import { JwtModule } from "@nestjs/jwt";
+import { APP_GUARD } from "@nestjs/core";
+import { TypeOrmModule } from "@nestjs/typeorm";
 import { AdminModule } from "./admin/admin.module";
+import { HealthController } from "./common/health.controller";
+import { AuthModule } from "./auth/auth.module";
 import { BoardsModule } from "./boards/boards.module";
+import { CommentsModule } from "./comments/comments.module";
+import { JwtAuthGuard } from "./common/guards/jwt-auth.guard";
+import { LikesModule } from "./likes/likes.module";
 import { PostsModule } from "./posts/posts.module";
-@Module({ imports: [ConfigModule.forRoot({ isGlobal: true, envFilePath: ".env" }), AuthModule, UsersModule, AdminModule, BoardsModule, PostsModule], controllers: [AppController] }) export class AppModule {}
+import { UsersModule } from "./users/users.module";
+
+@Module({
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: ".env" }),
+    JwtModule.register({ global: true }),
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: "mysql" as const,
+        host: configService.get<string>("DB_HOST", "localhost"),
+        port: Number(configService.get<string>("DB_PORT", "3306")),
+        username: configService.get<string>("DB_USER", "project_bible"),
+        password: configService.get<string>("DB_PASSWORD", "project_bible"),
+        database: configService.get<string>("DB_NAME", "pb_post"),
+        synchronize: false,
+        logging: false,
+        entities: [],
+      }),
+    }),
+    AuthModule,
+    UsersModule,
+    AdminModule,
+    BoardsModule,
+    PostsModule,
+    CommentsModule,
+    LikesModule,
+  ],
+  controllers: [HealthController],
+  providers: [{ provide: APP_GUARD, useClass: JwtAuthGuard }],
+})
+export class AppModule {}
