@@ -8,4 +8,6 @@
 **/test-results/
 **/tsconfig.tsbuildinfo
 Tools/cli/.runtime/
+**/__pycache__/
+*.pyc
 *.log
