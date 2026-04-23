@@ -44,6 +44,7 @@ jobs:
     env:
       MYSQL_HOST: 127.0.0.1
       MYSQL_PORT: 3306
+      MYSQL_ROOT_PASSWORD: project_bible
       MYSQL_USER: project_bible
       MYSQL_PASSWORD: project_bible
       DB_HOST: 127.0.0.1
