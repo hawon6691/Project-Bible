@@ -1,1 +1,0 @@
-import { Injectable } from "@nestjs/common"; @Injectable() export class AdminService { me() { return { id: 1, email: "admin@project-bible.dev", name: "Project Bible Admin", role: "ADMIN", domain: "shop" }; } dashboard() { return { domain: "shop", metrics: { users: 3, admins: 1, items: 4, active: 3 } }; } }

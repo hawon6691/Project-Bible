@@ -3,8 +3,8 @@ import { CategoriesModule } from "../categories/categories.module";
 import { OrdersModule } from "../orders/orders.module";
 import { ProductsModule } from "../products/products.module";
 import { ReviewsModule } from "../reviews/reviews.module";
-import { AdminController } from "./admin.controller";
-import { AdminService } from "./admin.service";
+import { AdminController } from "./controller/admin.controller";
+import { AdminService } from "./service/admin.service";
 
 @Module({
   imports: [CategoriesModule, ProductsModule, OrdersModule, ReviewsModule],
