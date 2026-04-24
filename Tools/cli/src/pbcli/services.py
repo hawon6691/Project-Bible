@@ -305,8 +305,39 @@ def _docker_compose(command: str) -> int:
     return _run_local(f"docker compose -f '{compose}' {command}", REPO_ROOT)
 
 
-def _apply_postgresql_sql(domain: str) -> int:
+def _database_env() -> dict[str, str]:
+    env_path = REPO_ROOT / "Database" / "docker" / ".env"
+    fallback_path = REPO_ROOT / "Database" / "docker" / ".env.example"
+    source = env_path if env_path.exists() else fallback_path
+    values: dict[str, str] = {}
+    if not source.exists():
+        return values
+    for line in source.read_text(encoding="utf-8").splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#") or "=" not in stripped:
+            continue
+        key, value = stripped.split("=", 1)
+        values[key.strip()] = value.strip().strip('"').strip("'")
+    return values
+
+
+def _confirm_database_overwrite(engine: str, domain: str, db_name: str, assume_yes: bool) -> None:
+    if assume_yes:
+        return
+    prompt = (
+        f"This will drop and recreate {engine} database '{db_name}' for domain '{domain}'. "
+        "Continue? [Y/N]: "
+    )
+    answer = input(prompt).strip().lower()
+    if answer not in {"y", "yes"}:
+        raise SystemExit("Database reset cancelled.")
+
+
+def _apply_postgresql_sql(domain: str, assume_yes: bool = False) -> int:
     db_name = f"pb_{domain}"
+    _confirm_database_overwrite("postgresql", domain, db_name, assume_yes)
+    env = _database_env()
+    user = env.get("POSTGRES_USER", "admin")
     init_dir = REPO_ROOT / "Database" / "postgresql" / domain
     schema_file = init_dir / "init" / "01_schema.sql"
     seed_file = init_dir / "seeds" / "01_seed.sql"
@@ -318,7 +349,7 @@ def _apply_postgresql_sql(domain: str) -> int:
             "projectbible-postgres",
             "psql",
             "-U",
-            "project_bible",
+            user,
             "-d",
             "postgres",
             "-c",
@@ -338,7 +369,7 @@ def _apply_postgresql_sql(domain: str) -> int:
             "projectbible-postgres",
             "psql",
             "-U",
-            "project_bible",
+            user,
             "-d",
             "postgres",
             "-c",
@@ -354,7 +385,7 @@ def _apply_postgresql_sql(domain: str) -> int:
             "projectbible-postgres",
             "psql",
             "-U",
-            "project_bible",
+            user,
             "-d",
             "postgres",
             "-c",
@@ -365,19 +396,19 @@ def _apply_postgresql_sql(domain: str) -> int:
     for file_path in (schema_file, seed_file):
         sql = file_path.read_text(encoding="utf-8")
         subprocess.run(
-        [
-            "docker",
-            "exec",
-            "-i",
-            "projectbible-postgres",
-            "psql",
-            "-U",
-            "project_bible",
-            "-d",
-            db_name,
-            "-v",
-            "ON_ERROR_STOP=1",
-        ],
+            [
+                "docker",
+                "exec",
+                "-i",
+                "projectbible-postgres",
+                "psql",
+                "-U",
+                user,
+                "-d",
+                db_name,
+                "-v",
+                "ON_ERROR_STOP=1",
+            ],
             input=sql,
             text=True,
             check=True,
@@ -386,8 +417,11 @@ def _apply_postgresql_sql(domain: str) -> int:
     return 0
 
 
-def _apply_mysql_sql(domain: str) -> int:
+def _apply_mysql_sql(domain: str, assume_yes: bool = False) -> int:
     db_name = f"pb_{domain}"
+    _confirm_database_overwrite("mysql", domain, db_name, assume_yes)
+    env = _database_env()
+    root_password = env.get("MYSQL_ROOT_PASSWORD", "1234")
     init_dir = REPO_ROOT / "Database" / "mysql" / domain
     schema_file = init_dir / "init" / "01_schema.sql"
     seed_file = init_dir / "seeds" / "01_seed.sql"
@@ -399,7 +433,7 @@ def _apply_mysql_sql(domain: str) -> int:
             "projectbible-mysql",
             "mysql",
             "-uroot",
-            "-pproject_bible",
+            f"-p{root_password}",
             "-e",
             f"DROP DATABASE IF EXISTS {db_name}; CREATE DATABASE {db_name} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;",
         ],
@@ -412,13 +446,13 @@ def _apply_mysql_sql(domain: str) -> int:
                 "docker",
                 "exec",
                 "-i",
-            "projectbible-mysql",
-            "mysql",
-            "-uroot",
-            "-pproject_bible",
-            "--default-character-set=utf8mb4",
-            db_name,
-        ],
+                "projectbible-mysql",
+                "mysql",
+                "-uroot",
+                f"-p{root_password}",
+                "--default-character-set=utf8mb4",
+                db_name,
+            ],
             input=sql,
             text=True,
             check=True,
@@ -437,9 +471,9 @@ def cmd_db_down(_args: argparse.Namespace) -> int:
 
 def cmd_db_reset(args: argparse.Namespace) -> int:
     if args.engine == "postgresql":
-        return _apply_postgresql_sql(args.domain)
+        return _apply_postgresql_sql(args.domain, getattr(args, "yes", False))
     if args.engine == "mysql":
-        return _apply_mysql_sql(args.domain)
+        return _apply_mysql_sql(args.domain, getattr(args, "yes", False))
     raise SystemExit(f"Unsupported engine: {args.engine}")
 
 

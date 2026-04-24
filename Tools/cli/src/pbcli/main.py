@@ -51,6 +51,7 @@ def build_parser() -> argparse.ArgumentParser:
     reset_parser = db_subparsers.add_parser("reset", help="Reset a database domain")
     reset_parser.add_argument("engine", choices=("postgresql", "mysql"))
     reset_parser.add_argument("domain", choices=("post", "shop"))
+    reset_parser.add_argument("-y", "--yes", action="store_true", help="Skip overwrite confirmation")
     reset_parser.set_defaults(func=cmd_db_reset)
 
     doctor_parser = subparsers.add_parser("doctor", help="Check local toolchain")
