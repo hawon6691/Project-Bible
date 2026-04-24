@@ -20,8 +20,11 @@ export function UpdatePostTitleForm({ postId }: Props) {
   }
 
   return (
-    <form className="row" onSubmit={submit}>
-      <input placeholder="New title" value={title} onChange={(event) => setTitle(event.target.value)} />
+    <form className="stack compact-form" onSubmit={submit}>
+      <label>
+        New title
+        <input placeholder="New title" value={title} onChange={(event) => setTitle(event.target.value)} />
+      </label>
       <button type="submit">Update title</button>
     </form>
   );

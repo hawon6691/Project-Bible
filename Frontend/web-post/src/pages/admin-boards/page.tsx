@@ -1,10 +1,10 @@
 import { AdminBoardPanel } from "../../widgets/admin-board-panel/AdminBoardPanel";
-import { PageShell } from "../../widgets/app-shell/PageShell";
+import { AdminShell } from "../../widgets/app-shell/AdminShell";
 
 export function AdminBoardsPage() {
   return (
-    <PageShell title="Admin Boards" description="관리자 게시판 CRUD입니다.">
+    <AdminShell title="Board Management" description="게시판 노출 상태와 생성 순서를 관리합니다.">
       <AdminBoardPanel />
-    </PageShell>
+    </AdminShell>
   );
 }

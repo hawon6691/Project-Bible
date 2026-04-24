@@ -1,6 +1,7 @@
 export interface PostSummary {
   id: number;
   boardId: number;
+  boardName?: string;
   title: string;
   viewCount: number;
   likeCount: number;

@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { Navigate, createBrowserRouter } from "react-router-dom";
 import { HomePage } from "../pages/home/page";
 import { LoginPage } from "../pages/login/page";
 import { SignupPage } from "../pages/signup/page";
@@ -17,8 +17,12 @@ export const router = createBrowserRouter([
   { path: "/boards", element: <BoardsPage /> },
   { path: "/post-detail", element: <PostDetailPage /> },
   { path: "/mypage", element: <MypagePage /> },
-  { path: "/admin-dashboard", element: <AdminDashboardPage /> },
-  { path: "/admin-boards", element: <AdminBoardsPage /> },
-  { path: "/admin-posts", element: <AdminPostsPage /> },
-  { path: "/admin-comments", element: <AdminCommentsPage /> },
+  { path: "/admin", element: <AdminDashboardPage /> },
+  { path: "/admin/boards", element: <AdminBoardsPage /> },
+  { path: "/admin/posts", element: <AdminPostsPage /> },
+  { path: "/admin/comments", element: <AdminCommentsPage /> },
+  { path: "/admin-dashboard", element: <Navigate to="/admin" replace /> },
+  { path: "/admin-boards", element: <Navigate to="/admin/boards" replace /> },
+  { path: "/admin-posts", element: <Navigate to="/admin/posts" replace /> },
+  { path: "/admin-comments", element: <Navigate to="/admin/comments" replace /> },
 ]);

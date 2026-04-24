@@ -1,10 +1,10 @@
 import { AdminCommentPanel } from "../../widgets/admin-comment-panel/AdminCommentPanel";
-import { PageShell } from "../../widgets/app-shell/PageShell";
+import { AdminShell } from "../../widgets/app-shell/AdminShell";
 
 export function AdminCommentsPage() {
   return (
-    <PageShell title="Admin Comments" description="댓글 상태를 운영합니다.">
+    <AdminShell title="Comment Moderation" description="댓글 상태를 빠르게 검토하고 숨김 처리합니다.">
       <AdminCommentPanel />
-    </PageShell>
+    </AdminShell>
   );
 }

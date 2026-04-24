@@ -1,36 +1,38 @@
 import { PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 interface Props extends PropsWithChildren {
   title: string;
   description: string;
+  kicker?: string;
 }
 
 const links = [
   ["/", "Home"],
-  ["/login", "Login"],
-  ["/signup", "Signup"],
   ["/boards", "Boards"],
   ["/post-detail", "Post Detail"],
   ["/mypage", "My Page"],
-  ["/admin-dashboard", "Admin"],
-  ["/admin-boards", "Admin Boards"],
-  ["/admin-posts", "Admin Posts"],
-  ["/admin-comments", "Admin Comments"],
+  ["/login", "Login"],
+  ["/signup", "Signup"],
+  ["/admin", "Admin"],
 ];
 
-export function PageShell({ title, description, children }: Props) {
+export function PageShell({ title, description, kicker = "Project-Bible Post", children }: Props) {
   return (
     <main className="page">
-      <nav className="nav">
+      <nav className="nav" aria-label="Post navigation">
+        <div className="brand">
+          <span className="brand-mark">PB</span>
+          <span>Post Board</span>
+        </div>
         {links.map(([to, label]) => (
-          <Link key={to} to={to}>
+          <NavLink key={to} to={to} className={({ isActive }) => (isActive ? "active" : undefined)}>
             {label}
-          </Link>
+          </NavLink>
         ))}
       </nav>
       <header className="header">
-        <div className="eyebrow">Project-Bible Post</div>
+        <div className="eyebrow">{kicker}</div>
         <h1>{title}</h1>
         <p>{description}</p>
       </header>
