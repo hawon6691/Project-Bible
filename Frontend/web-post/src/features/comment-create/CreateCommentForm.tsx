@@ -20,8 +20,11 @@ export function CreateCommentForm({ postId }: Props) {
   }
 
   return (
-    <form className="stack" onSubmit={submit}>
-      <textarea value={content} onChange={(event) => setContent(event.target.value)} />
+    <form className="stack compact-form" onSubmit={submit}>
+      <label>
+        New comment
+        <textarea value={content} onChange={(event) => setContent(event.target.value)} />
+      </label>
       <button type="submit">Add comment</button>
     </form>
   );

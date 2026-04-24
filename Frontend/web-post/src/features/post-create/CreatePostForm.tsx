@@ -18,11 +18,20 @@ export function CreatePostForm() {
   }
 
   return (
-    <form className="stack" onSubmit={submit}>
-      <input type="number" value={boardId} onChange={(event) => setBoardId(Number(event.target.value))} />
-      <input value={title} onChange={(event) => setTitle(event.target.value)} />
-      <textarea value={content} onChange={(event) => setContent(event.target.value)} />
-      <button type="submit">Create</button>
+    <form className="stack compact-form" onSubmit={submit}>
+      <label>
+        Board ID
+        <input type="number" value={boardId} onChange={(event) => setBoardId(Number(event.target.value))} />
+      </label>
+      <label>
+        Title
+        <input value={title} onChange={(event) => setTitle(event.target.value)} />
+      </label>
+      <label>
+        Content
+        <textarea value={content} onChange={(event) => setContent(event.target.value)} />
+      </label>
+      <button type="submit">Create post</button>
       {create.error && <p className="error">{create.error.message}</p>}
     </form>
   );

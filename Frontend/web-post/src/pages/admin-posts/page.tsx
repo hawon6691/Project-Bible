@@ -1,10 +1,10 @@
 import { AdminPostPanel } from "../../widgets/admin-post-panel/AdminPostPanel";
-import { PageShell } from "../../widgets/app-shell/PageShell";
+import { AdminShell } from "../../widgets/app-shell/AdminShell";
 
 export function AdminPostsPage() {
   return (
-    <PageShell title="Admin Posts" description="게시글 상태를 운영합니다.">
+    <AdminShell title="Post Moderation" description="게시글 공개 상태와 운영 지표를 확인합니다.">
       <AdminPostPanel />
-    </PageShell>
+    </AdminShell>
   );
 }

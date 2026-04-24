@@ -4,5 +4,16 @@ import { AdminBoardManager } from "../../features/admin-board-manage/AdminBoardM
 
 export function AdminBoardPanel() {
   const boards = useQuery({ queryKey: ["boards", "admin"], queryFn: fetchBoards });
-  return <AdminBoardManager boards={boards.data ?? []} />;
+  return (
+    <section className="admin-stack">
+      <div className="section-heading split">
+        <div>
+          <span className="eyebrow">Catalog</span>
+          <h2>게시판 운영</h2>
+        </div>
+        <span className="pill">{boards.data?.length ?? 0} boards</span>
+      </div>
+      <AdminBoardManager boards={boards.data ?? []} />
+    </section>
+  );
 }

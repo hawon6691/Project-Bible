@@ -7,18 +7,43 @@ export function AdminDashboardPanel() {
   const dashboard = useQuery({ queryKey: ["admin-dashboard"], queryFn: fetchAdminDashboard, retry: false });
 
   return (
-    <>
-      {me.error && <p className="error">Login as admin first.</p>}
-      {me.data && <p>Admin: {me.data.email}</p>}
-      {dashboard.data && (
-        <div className="grid">
-          <div className="card">Boards: {dashboard.data.boardCount}</div>
-          <div className="card">Posts: {dashboard.data.postCount}</div>
-          <div className="card">Comments: {dashboard.data.commentCount}</div>
-          <div className="card">Hidden posts: {dashboard.data.hiddenPostCount}</div>
-          <div className="card">Hidden comments: {dashboard.data.hiddenCommentCount}</div>
+    <div className="admin-stack">
+      {me.error && <p className="error notice">Login as admin first.</p>}
+      {me.data && (
+        <div className="admin-account">
+          <span className="eyebrow">Signed in</span>
+          <strong>{me.data.email}</strong>
         </div>
       )}
-    </>
+      {dashboard.data && (
+        <div className="metric-grid admin-metrics">
+          <div className="metric-card">
+            <span>Boards</span>
+            <strong>{dashboard.data.boardCount}</strong>
+            <small>managed board groups</small>
+          </div>
+          <div className="metric-card">
+            <span>Posts</span>
+            <strong>{dashboard.data.postCount}</strong>
+            <small>published and hidden</small>
+          </div>
+          <div className="metric-card">
+            <span>Comments</span>
+            <strong>{dashboard.data.commentCount}</strong>
+            <small>thread replies</small>
+          </div>
+          <div className="metric-card warning">
+            <span>Hidden posts</span>
+            <strong>{dashboard.data.hiddenPostCount}</strong>
+            <small>moderation queue</small>
+          </div>
+          <div className="metric-card warning">
+            <span>Hidden comments</span>
+            <strong>{dashboard.data.hiddenCommentCount}</strong>
+            <small>comment moderation</small>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }

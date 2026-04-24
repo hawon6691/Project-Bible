@@ -12,7 +12,7 @@ export function PostLikeActions({ postId }: Props) {
   const unlike = useMutation({ mutationFn: () => unlikePost(postId), onSuccess: invalidate });
 
   return (
-    <div className="row">
+    <div className="row action-row">
       <button type="button" onClick={() => like.mutate()}>Like</button>
       <button className="secondary" type="button" onClick={() => unlike.mutate()}>Unlike</button>
     </div>
