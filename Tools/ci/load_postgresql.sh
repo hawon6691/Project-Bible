@@ -5,11 +5,11 @@ set -euo pipefail
 domain="${1:?domain is required}"
 db_name="${2:?db_name is required}"
 
-export PGPASSWORD="${POSTGRES_PASSWORD:-project_bible}"
+export PGPASSWORD="${POSTGRES_PASSWORD:-1234}"
 
 host="${POSTGRES_HOST:-localhost}"
 port="${POSTGRES_PORT:-5432}"
-user="${POSTGRES_USER:-project_bible}"
+user="${POSTGRES_USER:-admin}"
 
 schema_path="Database/postgresql/${domain}/init/01_schema.sql"
 seed_path="Database/postgresql/${domain}/seeds/01_seed.sql"

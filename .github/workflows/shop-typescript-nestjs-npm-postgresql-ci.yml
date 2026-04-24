@@ -30,26 +30,26 @@ jobs:
       postgres:
         image: postgres:16
         env:
-          POSTGRES_USER: project_bible
-          POSTGRES_PASSWORD: project_bible
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: 1234
           POSTGRES_DB: postgres
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U project_bible -d postgres"
+          --health-cmd "pg_isready -U admin -d postgres"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 10
     env:
       POSTGRES_HOST: localhost
       POSTGRES_PORT: 5432
-      POSTGRES_USER: project_bible
-      POSTGRES_PASSWORD: project_bible
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 1234
       DB_HOST: localhost
       DB_PORT: 5432
       DB_NAME: pb_shop
-      DB_USER: project_bible
-      DB_PASSWORD: project_bible
+      DB_USER: admin
+      DB_PASSWORD: 1234
       JWT_SECRET: ci-access-secret
       JWT_REFRESH_SECRET: ci-refresh-secret
     steps:

@@ -7,8 +7,8 @@ db_name="${2:?db_name is required}"
 
 host="${MYSQL_HOST:-127.0.0.1}"
 port="${MYSQL_PORT:-3306}"
-user="${MYSQL_USER:-project_bible}"
-password="${MYSQL_PASSWORD:-project_bible}"
+user="${MYSQL_USER:-admin}"
+password="${MYSQL_PASSWORD:-1234}"
 bootstrap_user="${MYSQL_BOOTSTRAP_USER:-root}"
 bootstrap_password="${MYSQL_ROOT_PASSWORD:-${password}}"
 
