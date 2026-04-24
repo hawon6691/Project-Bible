@@ -48,6 +48,7 @@
 - `pb test`는 등록된 `test_command`를 해당 프로젝트 경로에서 실행한다.
 - `pb db up`, `pb db down`은 `Database/docker/docker-compose.yml`을 기준으로 동작한다.
 - `pb db reset`은 엔진별 SQL 파일을 컨테이너 내부 DB에 다시 적용하며, 덮어쓰기 전 확인을 받는다.
+- MySQL reset은 `Database/docker/.env`의 `MYSQL_USER` 기준으로 다시 만든 `pb_<domain>` DB 권한도 부여한다.
 - `pb doctor`는 Python, Node, npm, Java, Docker 존재 여부를 점검한다.
 - `pb gui`는 Tkinter GUI를 띄워 같은 기능을 호출한다.
 - `pb search`는 명령어와 등록 타깃 이름을 키워드로 검색한다.

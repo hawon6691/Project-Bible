@@ -36,3 +36,4 @@ From the repository root, `pb.cmd` runs the same CLI without installing the pack
 - Command help supports both Unix-style `--help` and Windows-style `/?`.
 - `pb search <keyword>` searches command names, descriptions, examples, and registered target names.
 - `pb db reset` drops and recreates the selected database, then applies `init/01_schema.sql` and `seeds/01_seed.sql`. It asks for `Y/N` confirmation before overwriting; use `--yes` only for scripted runs.
+- MySQL reset also grants the `MYSQL_USER` from `Database/docker/.env` access to the recreated `pb_<domain>` database.

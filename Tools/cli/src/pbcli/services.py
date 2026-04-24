@@ -333,6 +333,15 @@ def _confirm_database_overwrite(engine: str, domain: str, db_name: str, assume_y
         raise SystemExit("Database reset cancelled.")
 
 
+def _mysql_identifier(value: str) -> str:
+    return f"`{value.replace('`', '``')}`"
+
+
+def _mysql_literal(value: str) -> str:
+    escaped = value.replace("\\", "\\\\").replace("'", "''")
+    return f"'{escaped}'"
+
+
 def _apply_postgresql_sql(domain: str, assume_yes: bool = False) -> int:
     db_name = f"pb_{domain}"
     _confirm_database_overwrite("postgresql", domain, db_name, assume_yes)
@@ -422,20 +431,33 @@ def _apply_mysql_sql(domain: str, assume_yes: bool = False) -> int:
     _confirm_database_overwrite("mysql", domain, db_name, assume_yes)
     env = _database_env()
     root_password = env.get("MYSQL_ROOT_PASSWORD", "1234")
+    app_user = env.get("MYSQL_USER", "admin")
+    app_password = env.get("MYSQL_PASSWORD", "1234")
     init_dir = REPO_ROOT / "Database" / "mysql" / domain
     schema_file = init_dir / "init" / "01_schema.sql"
     seed_file = init_dir / "seeds" / "01_seed.sql"
+    db_identifier = _mysql_identifier(db_name)
+    app_user_literal = _mysql_literal(app_user)
+    app_password_literal = _mysql_literal(app_password)
     subprocess.run(
         [
             "docker",
             "exec",
             "-i",
+            "-e",
+            f"MYSQL_PWD={root_password}",
             "projectbible-mysql",
             "mysql",
             "-uroot",
-            f"-p{root_password}",
             "-e",
-            f"DROP DATABASE IF EXISTS {db_name}; CREATE DATABASE {db_name} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;",
+            (
+                f"DROP DATABASE IF EXISTS {db_identifier}; "
+                f"CREATE DATABASE {db_identifier} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci; "
+                f"CREATE USER IF NOT EXISTS {app_user_literal}@'%' IDENTIFIED BY {app_password_literal}; "
+                f"ALTER USER {app_user_literal}@'%' IDENTIFIED BY {app_password_literal}; "
+                f"GRANT ALL PRIVILEGES ON {db_identifier}.* TO {app_user_literal}@'%'; "
+                "FLUSH PRIVILEGES;"
+            ),
         ],
         check=True,
     )
@@ -446,10 +468,11 @@ def _apply_mysql_sql(domain: str, assume_yes: bool = False) -> int:
                 "docker",
                 "exec",
                 "-i",
+                "-e",
+                f"MYSQL_PWD={root_password}",
                 "projectbible-mysql",
                 "mysql",
                 "-uroot",
-                f"-p{root_password}",
                 "--default-character-set=utf8mb4",
                 db_name,
             ],
