@@ -19,6 +19,17 @@ export function HomeSummary() {
 
   return (
     <div className="community-board">
+      <section className="gallery-headline">
+        <div>
+          <span className="gallery-label">post gallery</span>
+          <h2>post 갤러리</h2>
+          <p>실시간 글 목록과 인기글을 한 화면에서 확인합니다.</p>
+        </div>
+        <div className="gallery-counts">
+          <span>전체글 <strong>{posts.data?.meta?.totalCount ?? 0}</strong></span>
+          <span>댓글 <strong>{recentPosts.reduce((sum, post) => sum + post.commentCount, 0)}</strong></span>
+        </div>
+      </section>
       <div className="community-toolbar">
         <div className="board-tabs" aria-label="게시판 분류">
           <button type="button" className="active">전체</button>

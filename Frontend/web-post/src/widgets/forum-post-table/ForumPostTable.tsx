@@ -19,6 +19,17 @@ export function ForumPostTable({ posts, loading = false, error = false, emptyTex
         <span>조회</span>
         <span>추천</span>
       </div>
+      <article className="forum-row notice-row">
+        <span className="forum-no">공지</span>
+        <div className="forum-title-cell">
+          <span className="notice-chip">공지</span>
+          <strong>post 갤러리 이용 안내</strong>
+        </div>
+        <span className="forum-author" data-label="글쓴이">운영자</span>
+        <span className="forum-date" data-label="작성일">상시</span>
+        <span className="forum-views" data-label="조회">-</span>
+        <span className="forum-likes" data-label="추천">-</span>
+      </article>
       {loading && <p className="empty-state">게시글을 불러오는 중입니다.</p>}
       {error && <p className="error empty-state">게시글을 불러오지 못했습니다.</p>}
       {posts.map((post) => (
