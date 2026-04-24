@@ -30,28 +30,28 @@ jobs:
       mysql:
         image: mysql:8.4
         env:
-          MYSQL_ROOT_PASSWORD: project_bible
+          MYSQL_ROOT_PASSWORD: 1234
           MYSQL_DATABASE: mysql
-          MYSQL_USER: project_bible
-          MYSQL_PASSWORD: project_bible
+          MYSQL_USER: admin
+          MYSQL_PASSWORD: 1234
         ports:
           - 3306:3306
         options: >-
-          --health-cmd="mysqladmin ping -h 127.0.0.1 -pproject_bible"
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -p1234"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=20
     env:
       MYSQL_HOST: 127.0.0.1
       MYSQL_PORT: 3306
-      MYSQL_ROOT_PASSWORD: project_bible
-      MYSQL_USER: project_bible
-      MYSQL_PASSWORD: project_bible
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: 1234
       DB_HOST: 127.0.0.1
       DB_PORT: 3306
       DB_NAME: pb_post
-      DB_USER: project_bible
-      DB_PASSWORD: project_bible
+      DB_USER: admin
+      DB_PASSWORD: 1234
       JWT_SECRET: ci-access-secret
       JWT_REFRESH_SECRET: ci-refresh-secret
     steps:
