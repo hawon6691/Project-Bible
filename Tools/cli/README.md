@@ -13,10 +13,18 @@ Shared Python CLI for Project-Bible scaffolding, local orchestration, and checks
 - `pb db up`
 - `pb db down`
 - `pb db reset <engine> <domain>`
+- `pb db reset <engine> <domain> --yes`
 - `pb doctor`
 - `pb gui`
 - `pb search <keyword>`
 - `pb --help`, `pb <command> --help`, `pb /?`, `pb <command> /?`
+
+From the repository root, `pb.cmd` runs the same CLI without installing the package first:
+
+```powershell
+.\pb.cmd list
+.\pb.cmd db reset mysql shop
+```
 
 ## Runtime
 
@@ -27,3 +35,4 @@ Shared Python CLI for Project-Bible scaffolding, local orchestration, and checks
 - If a requested port is already open, the CLI prints the occupying target or PID and asks you to stop it first with `pb down <target>` or `pb down --port <number>`.
 - Command help supports both Unix-style `--help` and Windows-style `/?`.
 - `pb search <keyword>` searches command names, descriptions, examples, and registered target names.
+- `pb db reset` drops and recreates the selected database, then applies `init/01_schema.sql` and `seeds/01_seed.sql`. It asks for `Y/N` confirmation before overwriting; use `--yes` only for scripted runs.

@@ -14,6 +14,12 @@ cd Tools/cli
 python -m pip install -e .
 ```
 
+설치 없이 저장소 루트 래퍼로 실행:
+
+```powershell
+.\pb.cmd list
+```
+
 설치 확인:
 
 ```powershell
@@ -86,9 +92,18 @@ pb db reset postgresql post
 
 현재 기대 동작:
 
+- `pb_post` 덮어쓰기 여부를 `Y/N`으로 확인
 - PostgreSQL 컨테이너 안에서 `pb_post`를 drop/create
 - `Database/postgresql/post/init/01_schema.sql` 적용
 - `Database/postgresql/post/seeds/01_seed.sql` 적용
+
+`Y` 또는 `yes`를 입력하면 덮어쓰고, `N` 또는 Enter를 입력하면 중지한다.
+
+자동화가 필요한 경우에만 확인을 생략한다.
+
+```powershell
+pb db reset postgresql post --yes
+```
 
 ## 로컬 점검 시나리오
 
@@ -145,6 +160,7 @@ pb up web-post --port 3000
 - `backend`, `frontend`, `database` 그룹 키를 바꾸는 경우
 - 백엔드 이름에서 `springboot`, `nestjs`, `maven`, `gradle`, `npm`, `postgresql`, `mysql` 같은 고정 토큰을 임의로 변경하는 경우
 - `pb db reset` 전에 DB 컨테이너를 올리지 않는 경우
+- `pb db reset` 확인 프롬프트에서 실수로 `Y`를 입력해 기존 데이터를 덮어쓰는 경우
 - `pb down` 호출 전에 `pb up` 기록이 없는 경우
 - 이미 열려 있는 포트를 `pb up <target> --port N`으로 다시 지정하는 경우
 

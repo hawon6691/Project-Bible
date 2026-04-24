@@ -17,6 +17,8 @@
 - `pb down <target>`은 CLI 런타임 상태에 저장된 PID를 종료한다.
 - `pb down --port N`은 해당 포트의 CLI 추적 프로세스 또는 포트를 점유 중인 프로세스를 종료한다.
 - `pb db up`, `pb db down`, `pb db reset`은 Docker 기반 DB 명령으로 동작한다.
+- `pb db reset`은 기존 DB를 덮어쓰기 전에 `Y/N` 확인을 요구한다.
+- 저장소 루트의 `pb.cmd`는 패키지 설치 없이 같은 CLI를 실행하는 Windows 래퍼다.
 
 ## 명령어 표
 
@@ -29,7 +31,7 @@
 | `pb test <target>` | `target` | 지정한 타깃의 테스트 명령을 현재 콘솔에서 실행한다. | `implemented` | backend, frontend | `pb test shop-typescript-nestjs-npm-postgresql` |
 | `pb db up` | 없음 | 공용 DB 인프라를 `docker compose up -d`로 기동한다. | `implemented` | database | `pb db up` |
 | `pb db down` | 없음 | 공용 DB 인프라를 `docker compose down`으로 종료한다. | `implemented` | database | `pb db down` |
-| `pb db reset <engine> <domain>` | `engine`, `domain` | 지정한 DB 엔진과 도메인 기준으로 DB를 drop/create 후 schema와 seed를 다시 적용한다. | `implemented` | database | `pb db reset postgresql post` |
+| `pb db reset <engine> <domain> [--yes]` | `engine`, `domain`, `yes` | 지정한 DB 엔진과 도메인 기준으로 DB를 drop/create 후 schema와 seed를 다시 적용한다. 기본 동작은 `Y/N` 확인을 요구한다. | `implemented` | database | `pb db reset postgresql post` |
 | `pb doctor` | 없음 | 로컬 실행 환경과 필수 도구 상태를 점검한다. | `implemented` | 공용 | `pb doctor` |
 | `pb gui` | 없음 | Tkinter 기반 로컬 GUI를 실행한다. | `implemented` | 공용 | `pb gui` |
 | `pb search <keyword>` | `keyword` | 명령어, 예시, 등록 타깃을 키워드로 검색한다. | `implemented` | 공용 | `pb search web` |
@@ -45,7 +47,7 @@
 - `pb down`은 저장된 PID 또는 지정 포트를 기준으로 대상 프로세스를 종료한다.
 - `pb test`는 등록된 `test_command`를 해당 프로젝트 경로에서 실행한다.
 - `pb db up`, `pb db down`은 `Database/docker/docker-compose.yml`을 기준으로 동작한다.
-- `pb db reset`은 엔진별 SQL 파일을 컨테이너 내부 DB에 다시 적용한다.
+- `pb db reset`은 엔진별 SQL 파일을 컨테이너 내부 DB에 다시 적용하며, 덮어쓰기 전 확인을 받는다.
 - `pb doctor`는 Python, Node, npm, Java, Docker 존재 여부를 점검한다.
 - `pb gui`는 Tkinter GUI를 띄워 같은 기능을 호출한다.
 - `pb search`는 명령어와 등록 타깃 이름을 키워드로 검색한다.
@@ -93,3 +95,5 @@ Stopped untracked process using port 3000 (PID ...)
 - CLI 식별자와 실제 폴더명이 다르면 운영 규칙이 깨지므로 허용하지 않는다.
 - `pb down <target>`은 `pb up`으로 기록된 PID가 없으면 종료할 대상을 찾지 못한다.
 - `pb down --port N`은 CLI 상태에 없는 프로세스도 포트를 점유 중이면 `taskkill`로 종료할 수 있으므로 포트 번호를 확인하고 실행해야 한다.
+- `pb db reset`에서 `Y` 또는 `yes`가 아닌 값을 입력하면 작업을 중지한다.
+- 자동화 환경에서만 `pb db reset <engine> <domain> --yes`로 확인을 생략한다.
