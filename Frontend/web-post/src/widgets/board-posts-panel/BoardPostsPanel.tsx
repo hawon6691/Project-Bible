@@ -14,29 +14,30 @@ export function BoardPostsPanel() {
 
   return (
     <div className="community-board">
-      <section className="gallery-headline">
-        <div>
-          <span className="gallery-label">post gallery</span>
-          <h2>post 갤러리</h2>
-          <p>글번호, 제목, 글쓴이, 조회, 추천을 빠르게 훑는 갤러리형 게시판입니다.</p>
-        </div>
-        <div className="gallery-counts">
-          <span>전체글 <strong>{posts.data?.meta?.totalCount ?? 0}</strong></span>
-          <span>게시판 <strong>{boards.data?.length ?? 0}</strong></span>
-        </div>
-      </section>
       <div className="community-toolbar">
         <div className="board-tabs" aria-label="게시글 정렬">
-          <button type="button" className="active">전체</button>
+          <button type="button" className="active">전체글</button>
           <button type="button">개념글</button>
-          <button type="button">댓글많은글</button>
-          <button type="button">조회많은글</button>
+          <button type="button">실시간</button>
+          <button type="button">조회순</button>
         </div>
         <div className="board-search">
           <input placeholder="검색어 입력" />
           <button type="button">검색</button>
         </div>
       </div>
+
+      <section className="gallery-banner">
+        <div>
+          <span className="gallery-label">post gallery</span>
+          <h2>post 갤러리</h2>
+          <p>번호, 이미지, 제목, 글쓴이, 조회, 추천을 한 줄에서 확인하는 게시판입니다.</p>
+        </div>
+        <div className="gallery-counts">
+          <span>전체글 <strong>{posts.data?.meta?.totalCount ?? 0}</strong></span>
+          <span>갤러리 <strong>{boards.data?.length ?? 0}</strong></span>
+        </div>
+      </section>
 
       <div className="community-layout board-page-layout">
         <aside className="community-left">
@@ -64,7 +65,7 @@ export function BoardPostsPanel() {
           <div className="forum-board-head">
             <div>
               <span className="eyebrow">All posts</span>
-              <h2>전체 게시글</h2>
+              <h2>전체글</h2>
             </div>
             <div className="forum-stats">
               <span>{posts.data?.meta?.totalCount ?? 0} posts</span>
@@ -88,7 +89,7 @@ export function BoardPostsPanel() {
           </section>
 
           <section className="forum-box compact">
-            <h2>게시판 정보</h2>
+            <h2>갤러리 정보</h2>
             <div className="mini-stat">
               <span>전체글</span>
               <strong>{posts.data?.meta?.totalCount ?? 0}</strong>
