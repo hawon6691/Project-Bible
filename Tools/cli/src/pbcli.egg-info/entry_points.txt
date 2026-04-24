@@ -1,0 +1,2 @@
+[console_scripts]
+pb = pbcli.main:main

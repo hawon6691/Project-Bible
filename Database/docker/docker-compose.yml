@@ -7,9 +7,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: project_bible
-      POSTGRES_PASSWORD: project_bible
-      POSTGRES_DB: postgres
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: pbdb
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ../postgresql:/workspace/postgresql
@@ -23,10 +23,10 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: project_bible
-      MYSQL_DATABASE: mysql
-      MYSQL_USER: project_bible
-      MYSQL_PASSWORD: project_bible
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: pbdb
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: 1234
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
