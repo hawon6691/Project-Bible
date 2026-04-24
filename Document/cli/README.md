@@ -15,6 +15,7 @@
 ## 현재 상태 요약
 
 - `pb list`: 실제 동작
+- `pb status`: 실제 동작
 - `pb up <target>`: 실제 동작
 - `pb down <target>`: 실제 동작
 - `pb test <target>`: 실제 동작

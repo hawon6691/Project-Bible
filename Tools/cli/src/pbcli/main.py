@@ -12,6 +12,7 @@ from pbcli.services import (
     cmd_down,
     cmd_list,
     cmd_search,
+    cmd_status,
     cmd_test,
     cmd_up,
 )
@@ -23,6 +24,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     list_parser = subparsers.add_parser("list", help="List registered targets")
     list_parser.set_defaults(func=cmd_list)
+
+    status_parser = subparsers.add_parser("status", help="List running CLI-tracked targets")
+    status_parser.set_defaults(func=cmd_status)
 
     up_parser = subparsers.add_parser("up", help="Start a target in a new PowerShell window")
     up_parser.add_argument("target")
