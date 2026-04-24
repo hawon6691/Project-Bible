@@ -5,6 +5,7 @@ Shared Python CLI for Project-Bible scaffolding, local orchestration, and checks
 ## Commands
 
 - `pb list`
+- `pb status`
 - `pb up <target>`
 - `pb up <target> --port <number>`
 - `pb down <target>`
@@ -23,6 +24,7 @@ From the repository root, `pb.cmd` runs the same CLI without installing the pack
 
 ```powershell
 .\pb.cmd list
+.\pb.cmd status
 .\pb.cmd db reset mysql shop
 ```
 
@@ -31,6 +33,7 @@ From the repository root, `pb.cmd` runs the same CLI without installing the pack
 - Process state file: `Tools/cli/.runtime/state.json`
 - Target registry: `Tools/cli/src/pbcli/config/projects.yaml`
 - GUI: Tkinter desktop panel backed by the same CLI service layer
+- `pb status` prints the active CLI-tracked target name, kind, PID, assigned port, and start time.
 - Default port policy: backend starts at `8000`, frontend starts at `3000`, then auto-increments by active runtime state
 - If a requested port is already open, the CLI prints the occupying target or PID and asks you to stop it first with `pb down <target>` or `pb down --port <number>`.
 - Command help supports both Unix-style `--help` and Windows-style `/?`.

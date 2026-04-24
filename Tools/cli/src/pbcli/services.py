@@ -192,10 +192,38 @@ def cmd_list(_args: argparse.Namespace) -> int:
     return 0
 
 
+def _print_runtime_table(rows: list[dict[str, str]]) -> None:
+    columns = [
+        ("name", "name"),
+        ("kind", "kind"),
+        ("pid", "pid"),
+        ("port", "assigned_port"),
+        ("started_at", "started_at"),
+    ]
+    widths = {
+        label: max(len(label), *(len(row[key]) for row in rows))
+        for label, key in columns
+    }
+    print("  ".join(label.ljust(widths[label]) for label, _key in columns))
+    print("  ".join("-" * widths[label] for label, _key in columns))
+    for row in rows:
+        print("  ".join(row[key].ljust(widths[label]) for label, key in columns))
+
+
+def cmd_status(_args: argparse.Namespace) -> int:
+    rows = list_runtime_records()
+    if not rows:
+        print("No tracked processes.")
+        return 0
+    _print_runtime_table(rows)
+    return 0
+
+
 def cmd_search(args: argparse.Namespace) -> int:
     keyword = args.keyword.lower()
     commands = [
         ("list", "List registered targets", "pb list"),
+        ("status", "List running CLI-tracked targets", "pb status"),
         ("up", "Start a target in a new PowerShell window", "pb up web-post --port 3000"),
         ("down", "Stop a tracked target or process by port", "pb down web-post / pb down --port 3000"),
         ("test", "Run tests for a target", "pb test web-shop"),

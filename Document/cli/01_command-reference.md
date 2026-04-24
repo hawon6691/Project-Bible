@@ -13,6 +13,7 @@
 - `domain`은 `post`, `shop`만 사용한다.
 - `pb up`은 새 PowerShell 창을 열어 대상 서버를 실행한다.
 - `pb up`은 `--port`가 없으면 backend는 `8000`, frontend는 `3000`부터 자동 증가 포트를 할당한다.
+- `pb status`는 CLI가 추적 중인 실행 대상의 name, kind, PID, port, started_at을 출력한다.
 - backend Swagger 기본 경로는 `/docs`다.
 - `pb down <target>`은 CLI 런타임 상태에 저장된 PID를 종료한다.
 - `pb down --port N`은 해당 포트의 CLI 추적 프로세스 또는 포트를 점유 중인 프로세스를 종료한다.
@@ -25,6 +26,7 @@
 | 명령 | 인자 | 설명 | 현재 상태 | 대상 그룹 | 예시 |
 | --- | --- | --- | --- | --- | --- |
 | `pb list` | 없음 | 등록된 백엔드, 프론트, DB 타깃 목록을 출력한다. | `implemented` | 공용 | `pb list` |
+| `pb status` | 없음 | CLI가 추적 중인 실행 대상과 할당 포트를 출력한다. | `implemented` | backend, frontend | `pb status` |
 | `pb up <target> [--port N]` | `target`, `port` | 지정한 타깃을 새 PowerShell 창에서 기동한다. 포트를 주지 않으면 그룹 기준 자동 할당한다. | `implemented` | backend, frontend | `pb up post-java-springboot-maven-postgresql --port 9010` |
 | `pb down <target>` | `target` | CLI가 추적 중인 대상 프로세스를 종료한다. | `implemented` | backend, frontend | `pb down web-shop` |
 | `pb down --port N` | `port` | 지정한 포트를 점유 중인 CLI 추적 프로세스 또는 로컬 프로세스를 종료한다. | `implemented` | backend, frontend, local process | `pb down --port 3000` |
@@ -43,6 +45,7 @@
 현재 `main.py` 기준 동작은 아래와 같다.
 
 - `pb list`는 `projects.yaml`을 읽어 `backend`, `frontend`, `database` 그룹별 타깃을 출력한다.
+- `pb status`는 현재 살아 있는 CLI 추적 프로세스를 출력하며, 이미 종료된 PID는 런타임 상태에서 정리한다.
 - `pb up`은 등록된 `start_command`를 새 PowerShell 창에서 실행하고 PID와 할당 포트를 기록한다.
 - `pb down`은 저장된 PID 또는 지정 포트를 기준으로 대상 프로세스를 종료한다.
 - `pb test`는 등록된 `test_command`를 해당 프로젝트 경로에서 실행한다.
@@ -84,6 +87,9 @@
 
 ```text
 Started post-java-springboot-maven-postgresql in new PowerShell window (PID ..., port 8000)
+name                                  kind     pid    port  started_at
+------------------------------------  -------  -----  ----  -------------------------
+post-java-springboot-maven-postgresql backend  12345  8000  2026-04-24T12:00:00
 Stopped web-shop (PID ..., port 3001)
 Stopped untracked process using port 3000 (PID ...)
 ```
