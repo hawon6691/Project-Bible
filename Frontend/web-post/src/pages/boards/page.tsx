@@ -3,7 +3,7 @@ import { PageShell } from "../../widgets/app-shell/PageShell";
 
 export function BoardsPage() {
   return (
-    <PageShell title="Boards" description="게시판을 살펴보고 최신 게시글을 목록 중심으로 확인합니다.">
+    <PageShell title="Boards" description="번호, 제목, 글쓴이, 조회, 추천 중심의 게시판 목록입니다.">
       <BoardPostsPanel />
     </PageShell>
   );

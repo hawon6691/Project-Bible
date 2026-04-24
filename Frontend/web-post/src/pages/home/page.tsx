@@ -3,7 +3,7 @@ import { PageShell } from "../../widgets/app-shell/PageShell";
 
 export function HomePage() {
   return (
-    <PageShell title="Post Board" description="게시판별 최신 글과 서비스 상태를 한 화면에서 확인합니다.">
+    <PageShell title="Post Board" description="실시간 글 목록, 게시판 분류, 인기글을 빠르게 훑어봅니다.">
       <HomeSummary />
     </PageShell>
   );

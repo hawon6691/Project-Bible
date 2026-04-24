@@ -7,9 +7,11 @@ export interface PostSummary {
   likeCount: number;
   commentCount: number;
   status: string;
+  createdAt?: string;
+  author?: { id: number; email?: string; nickname: string };
 }
 
 export interface PostDetail extends PostSummary {
   content: string;
-  author?: { id: number; email: string; nickname: string };
+  updatedAt?: string;
 }

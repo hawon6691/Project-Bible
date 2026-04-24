@@ -3,86 +3,96 @@ import { fetchBoards } from "../../entities/board/api";
 import { fetchPosts } from "../../entities/post/api";
 import { fetchHealth } from "../../entities/session/api";
 import { env } from "../../shared/config/env";
+import { ForumPostTable } from "../forum-post-table/ForumPostTable";
 
 export function HomeSummary() {
   const health = useQuery({ queryKey: ["health"], queryFn: fetchHealth });
   const boards = useQuery({ queryKey: ["boards", "home"], queryFn: fetchBoards });
-  const posts = useQuery({ queryKey: ["posts", "home"], queryFn: () => fetchPosts({ page: 1, limit: 5 }) });
-  const healthLabel = health.isLoading ? "Checking" : health.data ? `${health.data.status} / ${health.data.service}` : "Unavailable";
+  const posts = useQuery({ queryKey: ["posts", "home"], queryFn: () => fetchPosts({ page: 1, limit: 15 }) });
+  const healthLabel = health.isLoading ? "Checking" : health.data?.status ?? "Unavailable";
   const recentPosts = posts.data?.data ?? [];
+  const hotPosts = [...recentPosts].sort((left, right) => {
+    const leftScore = left.likeCount * 3 + left.commentCount * 2 + left.viewCount;
+    const rightScore = right.likeCount * 3 + right.commentCount * 2 + right.viewCount;
+    return rightScore - leftScore;
+  }).slice(0, 5);
 
   return (
-    <div className="home-board">
-      <div className="status-strip">
-        <div>
-          <span className="eyebrow">API Endpoint</span>
-          <strong>{env.apiBaseUrl}</strong>
+    <div className="community-board">
+      <div className="community-toolbar">
+        <div className="board-tabs" aria-label="게시판 분류">
+          <button type="button" className="active">전체</button>
+          <button type="button">인기</button>
+          <button type="button">공지</button>
+          <button type="button">질문</button>
         </div>
-        <span className={health.data?.status === "UP" ? "pill success-pill" : "pill"}>{healthLabel}</span>
-      </div>
-
-      <div className="metric-grid">
-        <div className="metric-card">
-          <span>Boards</span>
-          <strong>{boards.data?.length ?? 0}</strong>
-          <small>active board groups</small>
-        </div>
-        <div className="metric-card">
-          <span>Posts</span>
-          <strong>{posts.data?.meta?.totalCount ?? 0}</strong>
-          <small>total discussion threads</small>
-        </div>
-        <div className="metric-card accent">
-          <span>Latest</span>
-          <strong>{recentPosts[0]?.title ?? "No posts"}</strong>
-          <small>{recentPosts[0]?.boardName ?? `board ${recentPosts[0]?.boardId ?? "-"}`}</small>
+        <div className="board-search">
+          <input placeholder="제목, 내용, 글쓴이 검색" />
+          <button type="button">검색</button>
         </div>
       </div>
 
-      <div className="board-layout">
-        <section className="board-rail">
-          <div className="section-heading">
-            <span className="eyebrow">Boards</span>
+      <div className="community-layout">
+        <aside className="community-left">
+          <section className="forum-box">
             <h2>게시판</h2>
+            <div className="category-list">
+              {(boards.data ?? []).map((board) => (
+                <button type="button" key={board.id}>
+                  <span>{board.name}</span>
+                  <small>{board.status}</small>
+                </button>
+              ))}
+            </div>
+          </section>
+
+          <section className="forum-box compact">
+            <h2>서비스</h2>
+            <p className="api-line">{env.apiBaseUrl}</p>
+            <span className={health.data?.status === "UP" ? "pill success-pill" : "pill"}>{healthLabel}</span>
+            {health.data?.service && <small className="api-line">{health.data.service}</small>}
+          </section>
+        </aside>
+
+        <section className="community-main">
+          <div className="forum-board-head">
+            <div>
+              <span className="eyebrow">Post Board</span>
+              <h2>전체글</h2>
+            </div>
+            <div className="forum-stats">
+              <span>{boards.data?.length ?? 0} boards</span>
+              <span>{posts.data?.meta?.totalCount ?? 0} posts</span>
+            </div>
           </div>
-          <div className="board-list">
-            {(boards.data ?? []).map((board) => (
-              <article className="board-item" key={board.id}>
-                <div>
-                  <strong>{board.name}</strong>
-                  <p>{board.description}</p>
-                </div>
-                <span className="pill">{board.status}</span>
-              </article>
-            ))}
-          </div>
+          <ForumPostTable posts={recentPosts} loading={posts.isLoading} error={Boolean(posts.error)} />
         </section>
 
-        <section className="post-feed">
-          <div className="section-heading split">
-            <div>
-              <span className="eyebrow">Recent posts</span>
-              <h2>최신 글</h2>
+        <aside className="community-right">
+          <section className="forum-box">
+            <h2>실시간 인기글</h2>
+            <ol className="ranking-list">
+              {hotPosts.map((post) => (
+                <li key={post.id}>
+                  <span>{post.title}</span>
+                  <small>{post.likeCount} 추천</small>
+                </li>
+              ))}
+            </ol>
+          </section>
+
+          <section className="forum-box compact">
+            <h2>오늘의 요약</h2>
+            <div className="mini-stat">
+              <span>게시글</span>
+              <strong>{posts.data?.meta?.totalCount ?? 0}</strong>
             </div>
-            <span className="muted">{posts.data?.meta?.totalCount ?? 0} total</span>
-          </div>
-          <div className="post-list">
-            {recentPosts.map((post) => (
-              <article className="post-row" key={post.id}>
-                <div className="post-main">
-                  <span className="board-chip">{post.boardName ?? `board ${post.boardId}`}</span>
-                  <strong>{post.title}</strong>
-                </div>
-                <div className="post-meta">
-                  <span>{post.viewCount} views</span>
-                  <span>{post.likeCount} likes</span>
-                  <span>{post.commentCount} comments</span>
-                </div>
-              </article>
-            ))}
-            {recentPosts.length === 0 && <p className="empty-state">아직 표시할 게시글이 없습니다.</p>}
-          </div>
-        </section>
+            <div className="mini-stat">
+              <span>댓글</span>
+              <strong>{recentPosts.reduce((sum, post) => sum + post.commentCount, 0)}</strong>
+            </div>
+          </section>
+        </aside>
       </div>
     </div>
   );
