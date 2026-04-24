@@ -163,8 +163,11 @@ pb up web-post --port 3000
 - `pb db reset` 확인 프롬프트에서 실수로 `Y`를 입력해 기존 데이터를 덮어쓰는 경우
 - `pb down` 호출 전에 `pb up` 기록이 없는 경우
 - 이미 열려 있는 포트를 `pb up <target> --port N`으로 다시 지정하는 경우
+- 브라우저에서 프론트가 백엔드 응답을 못 읽을 때 CORS 응답 헤더를 확인하지 않는 경우
 
 ## 운영 메모
 
 - 현재 기준에서 `pb list`, `pb up`, `pb down`, `pb test`, `pb db up/down/reset`, `pb doctor`, `pb gui`가 구현되어 있다.
+- Java Spring Boot 백엔드는 로컬 프론트 개발 서버용 `http://localhost:*`, `http://127.0.0.1:*` CORS origin pattern을 허용한다.
+- NestJS 백엔드는 부트스트랩 단계에서 CORS를 활성화한다.
 - 실행 어댑터와 앱 baseline이 추가되면 이 문서에 구현체별 세부 runbook을 이어서 확장한다.
