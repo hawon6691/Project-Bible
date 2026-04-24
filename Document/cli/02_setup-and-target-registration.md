@@ -89,7 +89,7 @@ backend:
 1. `Backend/post` 또는 `Backend/shop` 아래에 실제 프로젝트 폴더를 만든다.
 2. 폴더명은 아래 규칙을 반드시 따른다.
 
-`<domain>-<language>-<framework>-<build>-<dataaccess>-<db>`
+`<domain>-<language>-<framework>-<build>-<db>`
 
 3. `projects.yaml`의 `backend` 그룹에 `name`, `path`를 추가한다.
 4. `start_command`, `test_command`, `port`, `env_file`를 함께 등록한다.
@@ -102,8 +102,8 @@ backend:
 예시:
 
 ```yaml
-- name: shop-java-springboot-gradle-jdbc-mysql
-  path: Backend/shop/shop-java-springboot-gradle-jdbc-mysql
+- name: shop-java-springboot-gradle-mysql
+  path: Backend/shop/shop-java-springboot-gradle-mysql
 ```
 
 ## 새 프론트 연결 절차

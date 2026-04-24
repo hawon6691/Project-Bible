@@ -2,7 +2,7 @@
 
 ## 1. 목적
 
-본 문서는 `shop` 서비스의 12개 백엔드 구현체에 공통으로 적용할 CI 기준을 정의한다.
+본 문서는 `shop` 서비스의 6개 백엔드 구현체에 공통으로 적용할 CI 기준을 정의한다.
 현재 저장소에 존재하는 Java/Nest 워크플로를 기준 구현체로 삼고, 나머지 구현체는 동일한 검증 목적을 가지는 개별 workflow 파일로 확장하는 것을 원칙으로 한다.
 
 공용 Python CLI는 CI 대상 애플리케이션이 아니라 실행과 검증을 오케스트레이션하는 도구로만 취급한다.
@@ -11,8 +11,8 @@
 
 현재 존재하는 아래 workflow 파일을 대표 구현체로 사용한다.
 
-- `.github/workflows/java-spring-maven-jpa-postgresql-ci.yml`
-- `.github/workflows/typescript-nest-npm-typeorm-postgresql-ci.yml`
+- `.github/workflows/shop-java-springboot-maven-postgresql-ci.yml`
+- `.github/workflows/shop-typescript-nestjs-npm-postgresql-ci.yml`
 
 이 두 워크플로는 `shop` 전용 파일은 아니지만, CI 계층과 검증 축을 정의하는 기준 구현체로 사용한다.
 
@@ -22,14 +22,14 @@
 
 파일명 규칙:
 
-`<domain>-<language>-<framework>-<build>-<dataaccess>-<db>-ci.yml`
+`<domain>-<language>-<framework>-<build>-<db>-ci.yml`
 
 예시:
 
 - `shop-java-springboot-maven-postgresql-ci.yml`
-- `shop-java-springboot-gradle-jdbc-mysql-ci.yml`
+- `shop-java-springboot-gradle-mysql-ci.yml`
 - `shop-typescript-nestjs-npm-postgresql-ci.yml`
-- `shop-typescript-nestjs-npm-knex-mysql-ci.yml`
+- `shop-typescript-nestjs-npm-mysql-ci.yml`
 
 경로 감시 규칙:
 
@@ -146,13 +146,13 @@
 ### Java
 
 - Maven과 Gradle 구현체는 각각 별도 workflow 파일을 가진다.
-- `jdbc`, `jpa`, `postgresql`, `mysql` 조합별로 개별 workflow를 둔다.
-- 대표 구현체는 현재 Java Maven JPA PostgreSQL workflow다.
+- `maven`, `gradle`, `postgresql`, `mysql` 조합별로 개별 workflow를 둔다.
+- 대표 구현체는 현재 Java Spring Boot Maven PostgreSQL workflow다.
 
 ### TypeScript
 
-- `knex`, `typeorm`, `postgresql`, `mysql` 조합별로 개별 workflow 파일을 둔다.
-- 대표 구현체는 현재 TypeScript Nest TypeORM PostgreSQL workflow다.
+- `npm`, `postgresql`, `mysql` 조합별로 개별 workflow 파일을 둔다.
+- 대표 구현체는 현재 TypeScript NestJS npm PostgreSQL workflow다.
 
 ### 공용 CLI
 

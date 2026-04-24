@@ -3,22 +3,22 @@
 ## 목적
 
 이 문서는 `post` 서비스에서 공통으로 유지해야 하는 테스트 기준을 정의한다.
-기준 문서는 `01_requirements.md`, `02_erd.md`, `03_api-specification.md`, `04_language.md`이며, `post` 도메인의 12개 백엔드 구현체가 동일한 테스트 목적을 공유하도록 만드는 것이 목표다.
+기준 문서는 `01_requirements.md`, `02_erd.md`, `03_api-specification.md`, `04_language.md`이며, `post` 도메인의 6개 백엔드 구현체가 동일한 테스트 목적을 공유하도록 만드는 것이 목표다.
 
 공용 Python CLI는 테스트 대상 구현체가 아니라 테스트 실행을 오케스트레이션하는 도구로만 사용한다.
 
 ## 대상 구현체 범위
 
-`post` 서비스의 테스트 기준 대상은 아래 12개 백엔드 구현체다.
+`post` 서비스의 테스트 기준 대상은 아래 6개 백엔드 구현체다.
 
-- Java 8개
-- TypeScript 4개
+- Java 4개
+- TypeScript 2개
 
 예시:
 
-- `post-java-springboot-maven-jdbc-postgresql`
+- `post-java-springboot-maven-postgresql`
 - `post-java-springboot-gradle-mysql`
-- `post-typescript-nestjs-npm-knex-postgresql`
+- `post-typescript-nestjs-npm-postgresql`
 - `post-typescript-nestjs-npm-mysql`
 
 ## 테스트 계층

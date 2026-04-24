@@ -143,7 +143,7 @@ pb up web-post --port 3000
 - `projects.yaml`의 `name`과 실제 폴더명을 다르게 적는 경우
 - `path`를 절대 경로로 적는 경우
 - `backend`, `frontend`, `database` 그룹 키를 바꾸는 경우
-- 백엔드 이름에서 `springboot`, `nestjs`, `jpa`, `jdbc`, `typeorm`, `knex` 같은 고정 토큰을 임의로 변경하는 경우
+- 백엔드 이름에서 `springboot`, `nestjs`, `maven`, `gradle`, `npm`, `postgresql`, `mysql` 같은 고정 토큰을 임의로 변경하는 경우
 - `pb db reset` 전에 DB 컨테이너를 올리지 않는 경우
 - `pb down` 호출 전에 `pb up` 기록이 없는 경우
 - 이미 열려 있는 포트를 `pb up <target> --port N`으로 다시 지정하는 경우

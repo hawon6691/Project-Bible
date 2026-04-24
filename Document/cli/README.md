@@ -40,7 +40,7 @@
 
 백엔드 식별자 규칙:
 
-`<domain>-<language>-<framework>-<build>-<dataaccess>-<db>`
+`<domain>-<language>-<framework>-<build>-<db>`
 
 예시:
 
