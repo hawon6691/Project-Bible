@@ -2,77 +2,105 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchBoards } from "../../entities/board/api";
 import { fetchPosts } from "../../entities/post/api";
 import { CreatePostForm } from "../../features/post-create/CreatePostForm";
+import { ForumPostTable } from "../forum-post-table/ForumPostTable";
 
 export function BoardPostsPanel() {
   const boards = useQuery({ queryKey: ["boards"], queryFn: fetchBoards });
-  const posts = useQuery({ queryKey: ["posts"], queryFn: () => fetchPosts({ page: 1, limit: 20, sort: "latest" }) });
+  const posts = useQuery({ queryKey: ["posts"], queryFn: () => fetchPosts({ page: 1, limit: 30, sort: "latest" }) });
   const postRows = posts.data?.data ?? [];
+  const hotPosts = [...postRows]
+    .sort((left, right) => right.likeCount + right.commentCount - (left.likeCount + left.commentCount))
+    .slice(0, 6);
 
   return (
-    <div className="board-layout wide">
-      <aside className="board-rail">
-        <div className="section-heading">
-          <span className="eyebrow">Channel</span>
-          <h2>게시판 목록</h2>
+    <div className="community-board">
+      <div className="community-toolbar">
+        <div className="board-tabs" aria-label="게시글 정렬">
+          <button type="button" className="active">전체글</button>
+          <button type="button">개념글</button>
+          <button type="button">실시간</button>
+          <button type="button">조회순</button>
         </div>
-        <div className="board-list">
-          {boards.isLoading && <p className="muted">게시판을 불러오는 중입니다.</p>}
-          {boards.error && <p className="error">게시판을 불러오지 못했습니다.</p>}
-          {(boards.data ?? []).map((board) => (
-            <article className="board-item" key={board.id}>
-              <div>
-                <strong>{board.name}</strong>
-                <p>{board.description}</p>
-              </div>
-              <span className="pill">{board.status}</span>
-            </article>
-          ))}
+        <div className="board-search">
+          <input placeholder="검색어 입력" />
+          <button type="button">검색</button>
         </div>
+      </div>
 
-        <section className="compose-panel">
-          <div className="section-heading">
-            <span className="eyebrow">Compose</span>
-            <h2>글 작성</h2>
-          </div>
-          <CreatePostForm />
-        </section>
-      </aside>
-
-      <section className="post-feed">
-        <div className="section-heading split">
-          <div>
-            <span className="eyebrow">Latest</span>
-            <h2>전체 게시글</h2>
-          </div>
-          <span className="pill">{posts.data?.meta?.totalCount ?? 0} posts</span>
+      <section className="gallery-banner">
+        <div>
+          <span className="gallery-label">post gallery</span>
+          <h2>post 갤러리</h2>
+          <p>번호, 이미지, 제목, 글쓴이, 조회, 추천을 한 줄에서 확인하는 게시판입니다.</p>
         </div>
-        <div className="board-table">
-          <div className="board-table-head">
-            <span>게시글</span>
-            <span>반응</span>
-            <span>상태</span>
-          </div>
-          {posts.isLoading && <p className="empty-state">게시글을 불러오는 중입니다.</p>}
-          {posts.error && <p className="error">게시글을 불러오지 못했습니다.</p>}
-          {postRows.map((post) => (
-            <article className="board-table-row" key={post.id}>
-              <div className="post-main">
-                <span className="board-chip">{post.boardName ?? `board ${post.boardId}`}</span>
-                <strong>
-                  #{post.id} {post.title}
-                </strong>
-              </div>
-              <div className="post-meta">
-                <span>{post.viewCount} views</span>
-                <span>{post.likeCount} likes</span>
-                <span>{post.commentCount} comments</span>
-              </div>
-              <span className="pill">{post.status}</span>
-            </article>
-          ))}
-          {postRows.length === 0 && !posts.isLoading && <p className="empty-state">아직 표시할 게시글이 없습니다.</p>}
+        <div className="gallery-counts">
+          <span>전체글 <strong>{posts.data?.meta?.totalCount ?? 0}</strong></span>
+          <span>갤러리 <strong>{boards.data?.length ?? 0}</strong></span>
         </div>
       </section>
+
+      <div className="community-layout board-page-layout">
+        <aside className="community-left">
+          <section className="forum-box">
+            <h2>갤러리</h2>
+            <div className="category-list">
+              {boards.isLoading && <p className="muted">게시판을 불러오는 중입니다.</p>}
+              {boards.error && <p className="error">게시판을 불러오지 못했습니다.</p>}
+              {(boards.data ?? []).map((board) => (
+                <button type="button" key={board.id}>
+                  <span>{board.name}</span>
+                  <small>{board.description}</small>
+                </button>
+              ))}
+            </div>
+          </section>
+
+          <section className="forum-box write-box">
+            <h2>글쓰기</h2>
+            <CreatePostForm />
+          </section>
+        </aside>
+
+        <section className="community-main">
+          <div className="forum-board-head">
+            <div>
+              <span className="eyebrow">All posts</span>
+              <h2>전체글</h2>
+            </div>
+            <div className="forum-stats">
+              <span>{posts.data?.meta?.totalCount ?? 0} posts</span>
+              <button type="button">글쓰기</button>
+            </div>
+          </div>
+          <ForumPostTable posts={postRows} loading={posts.isLoading} error={Boolean(posts.error)} />
+        </section>
+
+        <aside className="community-right">
+          <section className="forum-box">
+            <h2>개념글</h2>
+            <ol className="ranking-list">
+              {hotPosts.map((post) => (
+                <li key={post.id}>
+                  <span>{post.title}</span>
+                  <small>{post.likeCount} 추천</small>
+                </li>
+              ))}
+            </ol>
+          </section>
+
+          <section className="forum-box compact">
+            <h2>갤러리 정보</h2>
+            <div className="mini-stat">
+              <span>전체글</span>
+              <strong>{posts.data?.meta?.totalCount ?? 0}</strong>
+            </div>
+            <div className="mini-stat">
+              <span>게시판</span>
+              <strong>{boards.data?.length ?? 0}</strong>
+            </div>
+          </section>
+        </aside>
+      </div>
     </div>
   );
 }
